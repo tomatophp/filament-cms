@@ -1,0 +1,45 @@
+{
+    "name": "tomatophp/filament-cms",
+    "type": "library",
+    "description": "Full CMS System with easy to use page builder for FilamentPHP",
+    "keywords": [
+        "php",
+        "laravel",
+        "cms",
+        "blog",
+        "pages",
+        "services",
+        "page builder",
+        "filamentphp",
+        "tomatophp"
+    ],
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "TomatoPHP\\FilamentCms\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "TomatoPHP\\FilamentCms\\FilamentCmsServiceProvider"
+            ]
+        }
+    },
+    "authors": [
+        {
+            "name": "Fady Mondy",
+            "email": "info@3x1.io"
+        }
+    ],
+    "require": {
+        "php": "^8.1|^8.2",
+        "tomatophp/console-helpers": "^1.1",
+        "filament/filament": "^3.0.0"
+    }
+}
