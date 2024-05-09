@@ -22,7 +22,7 @@ php artisan filament-cms:install
 finally register the plugin on `/app/Providers/Filament/AdminPanelProvider.php`
 
 ```php
-->plugin(\TomatoPHP\FilamentApi\FilamentAPIPlugin::make())
+->plugin(\TomatoPHP\FilamentCms\FilamentCMSPlugin::make())
 ```
 
 ## Publish Assets

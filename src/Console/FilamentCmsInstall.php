@@ -1,6 +1,6 @@
 <?php
 
-namespace Tomatophp\FilamentCms\Console;
+namespace TomatoPHP\FilamentCms\Console;
 
 use Illuminate\Console\Command;
 use TomatoPHP\ConsoleHelpers\Traits\RunCommand;
@@ -37,11 +37,8 @@ class FilamentCmsInstall extends Command
     public function handle()
     {
         $this->info('Publish Vendor Assets');
-        $this->callSilent('optimize:clear');
-        $this->yarnCommand(['install']);
-        $this->yarnCommand(['build']);
         $this->artisanCommand(["migrate"]);
         $this->artisanCommand(["optimize:clear"]);
-        $this->info('filamentCms installed successfully.');
+        $this->info('Filament CMS installed successfully.');
     }
 }
