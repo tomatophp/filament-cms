@@ -1,7 +1,7 @@
 {
     "name": "tomatophp/filament-cms",
     "type": "library",
-    "description": "Full CMS System with easy to use page builder for FilamentPHP",
+    "description": "Full CMS System with easy to use page builder & theme manager for FilamentPHP",
     "keywords": [
         "php",
         "laravel",

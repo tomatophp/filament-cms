@@ -7,7 +7,7 @@
 [![License](https://poser.pugx.org/tomatophp/filament-cms/license.svg)](https://packagist.org/packages/tomatophp/filament-cms)
 [![Downloads](https://poser.pugx.org/tomatophp/filament-cms/d/total.svg)](https://packagist.org/packages/tomatophp/filament-cms)
 
-Full CMS System with easy to use page builder for FilamentPHP
+Full CMS System with easy to use page builder & theme manager for FilamentPHP
 
 ## Installation
 
