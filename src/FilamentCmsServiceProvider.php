@@ -3,6 +3,9 @@
 namespace TomatoPHP\FilamentCms;
 
 use Illuminate\Support\ServiceProvider;
+use TomatoPHP\FilamentCms\Services\Contracts\CmsType;
+use TomatoPHP\FilamentCms\Services\FilamentCMSServices;
+use TomatoPHP\FilamentCms\Services\FilamentCmsTypes;
 
 
 class FilamentCmsServiceProvider extends ServiceProvider
@@ -46,12 +49,93 @@ class FilamentCmsServiceProvider extends ServiceProvider
         ], 'filament-cms-lang');
 
         //Register Routes
-        $this->loadRoutesFrom(__DIR__.'/../routes/web.php');
+        $this->loadRoutesFrom(__DIR__.'/../routes/api.php');
+
+        $this->app->bind('filament-cms', function() {
+            return new FilamentCMSServices();
+        });
 
     }
 
     public function boot(): void
     {
-        //you boot methods here
+       FilamentCmsTypes::register([
+           CmsType::make('post')
+                ->label(trans('filament-cms::messages.types.post'))
+                ->color('success')
+                ->icon('heroicon-o-document')
+                ->sub([
+                    CmsType::make('category')
+                        ->color('info')
+                        ->icon('heroicon-o-folder')
+                        ->label(trans('filament-cms::messages.types.category')),
+                    CmsType::make('tags')
+                        ->color('warning')
+                        ->icon('heroicon-o-tag')
+                        ->label(trans('filament-cms::messages.types.tags')),
+                ]),
+           CmsType::make('page')
+               ->label(trans('filament-cms::messages.types.page'))
+               ->color('success')
+               ->icon('heroicon-o-bars-3-center-left')
+               ->sub([
+                   CmsType::make('skill')
+                       ->color('info')
+                       ->icon('heroicon-o-folder')
+                       ->label(trans('filament-cms::messages.types.skill')),
+                   CmsType::make('faq')
+                       ->color('info')
+                       ->icon('heroicon-o-question-mark-circle')
+                       ->label(trans('filament-cms::messages.types.faq')),
+                   CmsType::make('testimonials')
+                       ->color('warning')
+                       ->icon('heroicon-o-tag')
+                       ->label(trans('filament-cms::messages.types.testimonials')),
+                   CmsType::make('feature')
+                       ->label(trans('filament-cms::messages.types.feature'))
+                        ->color('warning')
+                        ->icon('heroicon-o-tag'),
+               ]),
+           CmsType::make('builder')
+               ->color('warning')
+               ->label(trans('filament-cms::messages.types.builder'))
+               ->icon('heroicon-o-clipboard-document-list'),
+           CmsType::make('service')
+               ->color('warning')
+               ->label(trans('filament-cms::messages.types.service'))
+               ->icon('heroicon-o-wrench-screwdriver'),
+           CmsType::make('portfolio')
+               ->label(trans('filament-cms::messages.types.portfolio'))
+               ->color('warning')
+               ->icon('heroicon-o-presentation-chart-bar'),
+           CmsType::make('video')
+               ->label(trans('filament-cms::messages.types.video'))
+               ->color('warning')
+               ->icon('heroicon-o-film'),
+           CmsType::make('audio')
+               ->label(trans('filament-cms::messages.types.audio'))
+               ->color('warning')
+               ->icon('heroicon-o-musical-note'),
+           CmsType::make('gallary')
+               ->label(trans('filament-cms::messages.types.gallary'))
+               ->color('warning')
+               ->icon('heroicon-o-photo'),
+           CmsType::make('link')
+               ->label(trans('filament-cms::messages.types.link'))
+               ->color('success')
+               ->icon('heroicon-o-link'),
+           CmsType::make('open-source')
+               ->label(trans('filament-cms::messages.types.open-source'))
+               ->color('info')
+               ->icon('heroicon-o-code-bracket'),
+           CmsType::make('event')
+               ->label(trans('filament-cms::messages.types.event'))
+               ->color('info')
+               ->icon('heroicon-o-calendar-days'),
+           CmsType::make('quote')
+               ->label(trans('filament-cms::messages.types.quote'))
+               ->color('danger')
+               ->icon('heroicon-o-bolt'),
+       ]);
     }
 }

@@ -19,11 +19,73 @@ after install your package please run this command
 ```bash
 php artisan filament-cms:install
 ```
+
 finally register the plugin on `/app/Providers/Filament/AdminPanelProvider.php`
 
 ```php
 ->plugin(\TomatoPHP\FilamentCms\FilamentCMSPlugin::make())
 ```
+
+## Screenshots
+
+![Posts List](https://github.com/tomatophp/filament-cms/blob/master/arts/posts-list.png)
+![Posts Create](https://github.com/tomatophp/filament-cms/blob/master/arts/create-post.png)
+![Posts SEO](https://github.com/tomatophp/filament-cms/blob/master/arts/post-seo.png)
+![Posts View](https://github.com/tomatophp/filament-cms/blob/master/arts/view-post.png)
+![Category List](https://github.com/tomatophp/filament-cms/blob/master/arts/category-list.png)
+![Category Create](https://github.com/tomatophp/filament-cms/blob/master/arts/create-category.png)
+
+## Features
+
+- [x] Content Manager
+- [ ] Content Comments & Ratings
+- [ ] Youtube Meta Integration
+- [ ] Behanace Content Importer
+- [ ] GitHub Content Importer
+- [ ] Page Builder
+- [ ] Theme Manager
+- [ ] Form Builder
+- [ ] Ticketing System
+- [ ] REST API
+
+## Add Custom Type to CMS
+
+you can add a custom type to the CMS by using Facade method on your AppServiceProvider `boot()` method 
+
+```php
+use TomatoPHP\FilamentCms\Facades\FilamentCMS;
+use TomatoPHP\FilamentCms\Services\Contracts\CmsType;
+
+public function boot()
+{
+    FilamentCMS::types()->register([
+        CmsType::make('building')
+            ->label('Buildings')
+            ->icon('heroicon-o-home')
+            ->color('danger')
+    ]);
+}
+
+```
+
+## Add More Authors Types
+
+you can add more authors types by using Facade method on your AppServiceProvider `boot()` method 
+
+```php
+use TomatoPHP\FilamentCms\Facades\FilamentCMS;
+use TomatoPHP\FilamentCms\Services\Contracts\CmsAuthor;
+
+public function boot()
+{
+    FilamentCMS::authors()->register([
+        CmsAuthor::make('Admin')
+            ->model(\App\Models\User::class)
+    ]);
+}
+
+```
+
 
 ## Publish Assets
 
@@ -57,7 +119,7 @@ you can join our discord server to get support [TomatoPHP](https://discord.gg/Xq
 
 ## Docs
 
-you can check docs of this package on [Docs](https://docs.tomatophp.com/plugins/laravel-package-generator)
+you can check docs of this package on [Docs](https://docs.tomatophp.com/filament/filament-cms)
 
 ## Changelog
 
@@ -69,7 +131,7 @@ Please see [SECURITY](SECURITY.md) for more information about security.
 
 ## Credits
 
-- [Fady Mondy](mailto:info@3x1.io)
+- [Fady Mondy](https://wa.me/+201207860084)
 
 ## License
 
