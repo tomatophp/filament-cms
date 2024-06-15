@@ -27,7 +27,6 @@ class CreateBrowser
 
             $this->dusk->windowSize(1200, 1200);
             $this->dusk->ignoreSslErrors();
-            $this->dusk->cookie();
             $this->dusk->disableNotifications();
             $this->dusk->disableInfobars();
             $this->agent();
@@ -35,21 +34,6 @@ class CreateBrowser
         } catch (\Exception $e) {
             $this->dusk->stop();
         }
-    }
-
-    /**
-     * @return void
-     */
-    private function cookies():void
-    {
-        $path = "";
-        if ($this->type === 'web' || $this->type === 'chrome') {
-            $path = config('services.cookies.path') . '/cookies/' . $this->id . '_web_cookies';
-        } else {
-            $path = config('services.cookies.path') . '/cookies/' . $this->id . '_mobile_cookies';
-        }
-
-        $this->dusk->browserData($path);
     }
 
     /**

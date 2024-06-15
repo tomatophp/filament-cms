@@ -18,20 +18,10 @@ return [
 
     /*
      * ---------------------------------------------------
-     * Behanace Integration For Portfolio Import
-     * ---------------------------------------------------
-     */
-    "behance" => [
-        "username" => null,
-        "service_id" => null
-    ],
-
-    /*
-     * ---------------------------------------------------
      * Youtube Integration For Posts Meta
      * ---------------------------------------------------
      */
-    "youtube_key" => null,
+    "youtube_key" => env('YOUTUBE_KEY', null),
 
     /*
      * ---------------------------------------------------

@@ -44,6 +44,7 @@ return [
                     "title" => "Images",
                     "description" => "Images settings",
                     "columns" => [
+                        "images" => "Gallary Images",
                         "feature_image" => "Feature Image",
                         "cover_image" => "Cover Image",
                     ]
@@ -69,7 +70,45 @@ return [
                         "categories" => "Categories",
                         "tags" => "Tags",
                     ]
+                ]
+            ],
+            "import" => [
+                "button" => "Import From URL",
+                "youtube_type" => "Import From Youtube",
+                "behance_type" => "Import From Behance",
+                "github_type" => "Import From Github",
+                "url" => "URL",
+                "redirect_url" => "Redirect URL",
+                "notifications" => [
+                    "title" => "Imported Successfully",
+                    "description" => "The post has been imported successfully",
                 ],
+                "youtube" => [
+                    "notifications" => [
+                        "title" => "Youtube Video Imported",
+                        "description" => "The video has been imported successfully",
+                        "view" => "View Post",
+                        "failed_title" => "Youtube Video Import Failed",
+                        "failed_description" => "The video import has failed",
+                    ]
+                ],
+                "behance" => [
+                    "notifications" => [
+                        "title" => "Behance Project Imported",
+                        "description" => "The project has been imported successfully",
+                        "failed_title" => "Behance Project Import Failed",
+                        "failed_description" => "The project import has failed",
+                    ]
+                ],
+                "github" => [
+                    "notifications" => [
+                        "title" => "Github Repository Imported",
+                        "description" => "The repository has been imported successfully",
+                        "view" => "View Post",
+                        "failed_title" => "Github Repository Import Failed",
+                        "failed_description" => "The repository import has failed",
+                    ]
+                ]
             ]
         ],
         "category" => [

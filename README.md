@@ -39,14 +39,49 @@ finally register the plugin on `/app/Providers/Filament/AdminPanelProvider.php`
 
 - [x] Content Manager
 - [x] Content Comments & Ratings
-- [ ] Youtube Meta Integration
-- [ ] Behanace Content Importer
-- [ ] GitHub Content Importer
+- [x] Youtube Meta Integration
+- [x] Behanace Content Importer
+- [x] GitHub Content Importer
+- [x] Content Import & Export
 - [ ] Page Builder
 - [ ] Theme Manager
 - [ ] Form Builder
 - [ ] Ticketing System
 - [ ] REST API
+
+## Allow Import From Youtube URL
+
+you can allow import content from youtube by adding `YOUTUBE_KEY` to your `.env`
+
+```dotenv
+YOUTUBE_KEY=YOUR_YOUTUBE_KEY
+```
+
+now on your panel provider `/app/Providers/Filament/AdminPanelProvider.php` add this method
+
+```php
+->plugin(\TomatoPHP\FilamentCms\FilamentCMSPlugin::make()->allowYoutubeImport())
+```
+
+## Allow Import From Behanace URL 
+
+first of all you need to install `dusk` as a main package to allow this feature
+
+```bash
+composer require laravel/dusk
+```
+
+now install dusk driver
+
+```bash
+php artisan dusk:install
+```
+
+now you need to allow behanace import on your panel provider `/app/Providers/Filament/AdminPanelProvider.php` add this method
+
+```php
+->plugin(\TomatoPHP\FilamentCms\FilamentCMSPlugin::make()->allowBehanceImport())
+```
 
 ## Add Custom Type to CMS
 

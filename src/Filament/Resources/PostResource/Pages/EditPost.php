@@ -2,9 +2,12 @@
 
 namespace TomatoPHP\FilamentCms\Filament\Resources\PostResource\Pages;
 
+use Illuminate\Database\Eloquent\Model;
 use TomatoPHP\FilamentCms\Filament\Resources\PostResource;
 use Filament\Actions;
 use Filament\Resources\Pages\EditRecord;
+use TomatoPHP\FilamentCms\Jobs\GitHubMetaGetterJob;
+use TomatoPHP\FilamentCms\Jobs\YoutubeMetaGetterJob;
 
 class EditPost extends EditRecord
 {

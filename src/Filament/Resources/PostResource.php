@@ -17,6 +17,8 @@ use Illuminate\Support\Str;
 use Livewire\Livewire;
 use TomatoPHP\FilamentCms\Filament\Resources\PostResource\Pages;
 use TomatoPHP\FilamentCms\Filament\Resources\PostResource\RelationManagers;
+use TomatoPHP\FilamentCms\Filament\Resources\PostResource\Export;
+use TomatoPHP\FilamentCms\Filament\Resources\PostResource\Import;
 use TomatoPHP\FilamentCms\Models\Category;
 use TomatoPHP\FilamentCms\Models\Post;
 use Filament\Forms;
@@ -207,19 +209,6 @@ class PostResource extends Resource
                                             ->label(trans('filament-cms::messages.content.posts.sections.status.columns.published_at'))
                                             ->default(now()->format('Y-m-d H:i:s')),
                                     ]),
-                                Forms\Components\Section::make(trans('filament-cms::messages.content.posts.sections.meta.title'))
-                                    ->description(trans('filament-cms::messages.content.posts.sections.meta.description'))
-                                    ->hidden(fn(Forms\Get $get)=> ($get('type') !== 'video' && $get('type') !== 'open-source'))
-                                    ->schema([
-                                        Forms\Components\TextInput::make('meta_url')
-                                            ->label(trans('filament-cms::messages.content.posts.sections.meta.columns.meta_url'))
-                                            ->maxLength(255),
-                                        Forms\Components\TextInput::make('meta')
-                                            ->label(trans('filament-cms::messages.content.posts.sections.meta.columns.meta')),
-                                        Forms\Components\Textarea::make('meta_redirect')
-                                            ->label(trans('filament-cms::messages.content.posts.sections.meta.columns.meta_redirect'))
-                                            ->columnSpanFull(),
-                                    ]),
                                 Forms\Components\Section::make(trans('filament-cms::messages.content.posts.sections.images.title'))
                                     ->description(trans('filament-cms::messages.content.posts.sections.images.description'))
                                     ->schema([
@@ -235,6 +224,13 @@ class PostResource extends Resource
                                             ->collection('cover_image')
                                             ->image()
                                             ->maxFiles(1)
+                                            ->maxSize(2048)
+                                            ->maxWidth(1920),
+                                        Forms\Components\SpatieMediaLibraryFileUpload::make('images')
+                                            ->label(trans('filament-cms::messages.content.posts.sections.images.columns.images'))
+                                            ->collection('images')
+                                            ->multiple()
+                                            ->image()
                                             ->maxSize(2048)
                                             ->maxWidth(1920),
                                     ]),
@@ -318,20 +314,31 @@ class PostResource extends Resource
 
     public static function table(Table $table): Table
     {
+        $importActions = [];
+        if(filament('filament-cms')->allowImport){
+            $importActions[] = Tables\Actions\ImportAction::make()->importer(Import\ImportPosts::class);
+        }
+        if(filament('filament-cms')->allowExport){
+            $importActions[] = Tables\Actions\ExportAction::make()->exporter(Export\ExportPosts::class);
+        }
         return $table
+            ->headerActions($importActions)
             ->columns([
                 Tables\Columns\SpatieMediaLibraryImageColumn::make('feature_image')
                     ->label(trans('filament-cms::messages.content.posts.sections.images.columns.feature_image'))
                     ->defaultImageUrl(fn(Post $post)=> 'https://ui-avatars.com/api/?name='.Str::of($post->slug)->replace('-','+').'&color=FFFFFF&background=020617')
                     ->square()
+                    ->toggleable()
                     ->collection('feature_image'),
                 Tables\Columns\TextColumn::make('title')
                     ->label(trans('filament-cms::messages.content.posts.sections.post.columns.title'))
                     ->description(fn(Post $post)=> Str::of($post->short_description)->limit(50))
+                    ->toggleable()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('type')
                     ->sortable()
                     ->label(trans('filament-cms::messages.content.posts.sections.status.columns.type'))
+                    ->toggleable()
                     ->state(function (Post $post){
                         return FilamentCMSTypes::getOptions()->where('key', $post->type)->first()?->label;
                     })
@@ -344,19 +351,23 @@ class PostResource extends Resource
                     ->badge()
                     ->searchable(),
                 Tables\Columns\ToggleColumn::make('is_published')
+                    ->toggleable()
                     ->sortable()
                     ->label(trans('filament-cms::messages.content.posts.sections.status.columns.is_published'))
                     ->onColor('success'),
                 Tables\Columns\ToggleColumn::make('is_trend')
+                    ->toggleable()
                     ->sortable()
                     ->label(trans('filament-cms::messages.content.posts.sections.status.columns.is_trend'))
                     ->onColor('success'),
                 Tables\Columns\TextColumn::make('published_at')
+                    ->toggleable()
                     ->label(trans('filament-cms::messages.content.posts.sections.status.columns.published_at'))
-                    ->description(fn(Post $post)=> $post->published_at->diffForHumans())
+                    ->description(fn(Post $post)=> $post->published_at?->diffForHumans())
                     ->dateTime()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('likes')
+                    ->toggleable()
                     ->label(trans('filament-cms::messages.content.posts.sections.status.columns.likes'))
                     ->badge()
                     ->color('danger')
@@ -364,6 +375,7 @@ class PostResource extends Resource
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('views')
+                    ->toggleable()
                     ->label(trans('filament-cms::messages.content.posts.sections.status.columns.views'))
                     ->color('info')
                     ->icon('heroicon-s-arrow-trending-up')
@@ -482,6 +494,7 @@ class PostResource extends Resource
                     ->iconButton()
                     ->tooltip(__('filament-actions::restore.single.label')),
             ])
+            ->defaultSort('created_at', 'desc')
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),

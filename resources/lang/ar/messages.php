@@ -37,6 +37,7 @@ return [
                     "title" => "الصور",
                     "description" => "إعدادات الصور",
                     "columns" => [
+                        "images" => "صور المعرض",
                         "feature_image" => "صورة مميزة",
                         "cover_image" => "صورة الغلاف",
                     ]
@@ -63,6 +64,44 @@ return [
                         "tags" => "الوسوم",
                     ]
                 ],
+            ],
+            "import" => [
+                "button" => "استيراد من رابط",
+                "youtube_type" => "استيراد من يوتيوب",
+                "behance_type" => "استيراد من Behance",
+                "github_type" => "استيراد من Github",
+                "url" => "الرابط",
+                "redirect_url" => "رابط التوجيه",
+                "notifications" => [
+                    "title" => "تم استيراد المقالة بنجاح",
+                    "description" => "تم استيراد المقالة بنجاح",
+                ],
+                "youtube" => [
+                    "notifications" => [
+                        "title" => "تم استيراد الفيديو من يوتيوب",
+                        "description" => "تم استيراد الفيديو بنجاح",
+                        "view" => "عرض المقالة",
+                        "failed_title" => "فشل استيراد الفيديو من يوتيوب",
+                        "failed_description" => "فشل استيراد الفيديو",
+                    ]
+                ],
+                "behance" => [
+                    "notifications" => [
+                        "title" => "تم استيراد المشروع من Behance",
+                        "description" => "تم استيراد المشروع بنجاح",
+                        "failed_title" => "فشل استيراد المشروع من Behance",
+                        "failed_description" => "فشل استيراد المشروع",
+                    ]
+                ],
+                "github" => [
+                    "notifications" => [
+                        "title" => "تم استيراد المشروع من Github",
+                        "description" => "تم استيراد المشروع بنجاح",
+                        "view" => "عرض المقالة",
+                        "failed_title" => "فشل استيراد المشروع من Github",
+                        "failed_description" => "فشل استيراد المشروع",
+                    ]
+                ]
             ]
         ],
         "category" => [
