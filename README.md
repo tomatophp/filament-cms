@@ -1,4 +1,4 @@
-![Screenshot](https://github.com/tomatophp/filament-cms/blob/master/arts/3x1io-tomato-cms.jpg)
+![Screenshot](https://raw.githubusercontent.com/tomatophp/filament-cms/master/arts/3x1io-tomato-cms.jpg)
 
 # Filament CMS
 
@@ -28,12 +28,12 @@ finally register the plugin on `/app/Providers/Filament/AdminPanelProvider.php`
 
 ## Screenshots
 
-![Posts List](https://github.com/tomatophp/filament-cms/blob/master/arts/posts-list.png)
-![Posts Create](https://github.com/tomatophp/filament-cms/blob/master/arts/create-post.png)
-![Posts SEO](https://github.com/tomatophp/filament-cms/blob/master/arts/post-seo.png)
-![Posts View](https://github.com/tomatophp/filament-cms/blob/master/arts/view-post.png)
-![Category List](https://github.com/tomatophp/filament-cms/blob/master/arts/category-list.png)
-![Category Create](https://github.com/tomatophp/filament-cms/blob/master/arts/create-category.png)
+![Posts List](https://raw.githubusercontent.com/tomatophp/filament-cms/master/arts/posts-list.png)
+![Posts Create](https://raw.githubusercontent.com/tomatophp/filament-cms/master/arts/create-post.png)
+![Posts SEO](https://raw.githubusercontent.com/tomatophp/filament-cms/master/arts/post-seo.png)
+![Posts View](https://raw.githubusercontent.com/tomatophp/filament-cms/master/arts/view-post.png)
+![Category List](https://raw.githubusercontent.com/tomatophp/filament-cms/master/arts/category-list.png)
+![Category Create](https://raw.githubusercontent.com/tomatophp/filament-cms/master/arts/create-category.png)
 
 ## Features
 
