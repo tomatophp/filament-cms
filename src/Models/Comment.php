@@ -44,7 +44,7 @@ class Comment extends Model
      */
     public function user()
     {
-        return $this->morphTo('userable');
+        return $this->morphTo('user');
     }
 
     /**
@@ -52,6 +52,6 @@ class Comment extends Model
      */
     public function content()
     {
-        return $this->morphTo('contentable');
+        return $this->morphTo('content');
     }
 }

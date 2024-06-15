@@ -91,7 +91,7 @@ class Post extends Model implements HasMedia
      */
     public function comments()
     {
-        return $this->hasMany(Comment::class);
+        return $this->morphMany(Comment::class, 'content');
     }
 
     public function author()

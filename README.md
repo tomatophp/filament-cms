@@ -38,7 +38,7 @@ finally register the plugin on `/app/Providers/Filament/AdminPanelProvider.php`
 ## Features
 
 - [x] Content Manager
-- [ ] Content Comments & Ratings
+- [x] Content Comments & Ratings
 - [ ] Youtube Meta Integration
 - [ ] Behanace Content Importer
 - [ ] GitHub Content Importer
