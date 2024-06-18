@@ -3,51 +3,46 @@
 namespace TomatoPHP\FilamentCms\Services\Contracts;
 
 use Illuminate\Support\Facades\Cookie;
+use Illuminate\View\View;
 
 class Section
 {
-    public ?string $type = null;
+    public ?string $label = null;
+    public ?string $type = 'section';
     public ?string $key = null;
     public ?string $view = null;
-    public ?string $form = null;
-    public ?int $form_id = null;
+    public ?array $form = [];
+    public ?bool $hasForm = false;
     public ?string $color = null;
     public ?string $icon = null;
     public ?bool $lock = false;
 
-
-    public function __construct()
+    public static function make(string $key):self
     {
-        // decrypt
-        try {
-            $decryptedString = \Crypt::decrypt(Cookie::get('lang'), false);
-            $lang = json_decode(explode('|', $decryptedString)[1]);
-            app()->setLocale($lang->id ?? config('app.locale'));
-        }catch (\Exception $exception) {}
+        return (new self())->key($key);
     }
 
     public function toArray(): array
     {
         return [
+            'hasForm' => $this->hasForm,
             'type' => $this->type,
+            'label' => $this->label,
             'key' => $this->key,
             'view' => $this->view,
-            'form' => $this->form,
             'color' => $this->color,
             'icon' => $this->icon,
-            'form_id' => $this->form_id,
+            'form' => $this->form,
             'lock' => $this->lock,
         ];
     }
 
-
-    /**
-     * @return static
-     */
-    public static function make(): static
+    public function label(string $label): static
     {
-        return (new static);
+        $this->label = $label;
+        return $this;
     }
+
 
     public function type(string $type): static
     {
@@ -55,9 +50,10 @@ class Section
         return $this;
     }
 
-    public function form_id(string $form_id): static
+    public function form(array $form): static
     {
-        $this->form_id = $form_id;
+        $this->form = $form;
+        $this->hasForm = true;
         return $this;
     }
 
@@ -69,13 +65,13 @@ class Section
 
     public function view(string $view): static
     {
-        $this->view = $view;
-        return $this;
-    }
+        if(view()->exists($view)){
+            $this->view = $view;
+        }
+        else {
+            throw new \Exception("View not found");
+        }
 
-    public function form(string $form): static
-    {
-        $this->form = $form;
         return $this;
     }
 
@@ -90,7 +86,6 @@ class Section
         $this->icon = $icon;
         return $this;
     }
-
 
     public function lock(string $lock): static
     {

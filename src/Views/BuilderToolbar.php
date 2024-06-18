@@ -1,22 +1,25 @@
 <?php
 
-namespace TomatoPHP\TomatoThemes\Views;
+namespace TomatoPHP\FilamentCms\Views;
 
 use Illuminate\View\Component;
-use TomatoPHP\TomatoCms\Models\Page;
+use Illuminate\View\View;
+use TomatoPHP\FilamentCms\Models\Post;
 use TomatoPHP\TomatoThemes\Services\Abstract\Section;
 
 class BuilderToolbar extends Component
 {
+
     public function __construct(
-        public Page $page
+        public Post $page,
+        public bool $allowLayout=false
     )
     {
         //
     }
 
-    public function render()
+    public function render(): View
     {
-       return view('tomato-themes::themes.builder-toolbar');
+       return view('filament-cms::themes.builder-toolbar');
     }
 }

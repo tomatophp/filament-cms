@@ -17,4 +17,9 @@ class FilamentCMSServices
     {
         return new FilamentCMSAuthors();
     }
+
+    public function themes(): FilamentCMSThemes
+    {
+        return new FilamentCMSThemes();
+    }
 }

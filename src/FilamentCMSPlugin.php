@@ -4,8 +4,12 @@ namespace TomatoPHP\FilamentCms;
 
 use Filament\Contracts\Plugin;
 use Filament\Panel;
+use TomatoPHP\FilamentCms\Filament\Pages\Themes;
 use TomatoPHP\FilamentCms\Filament\Resources\CategoryResource;
 use TomatoPHP\FilamentCms\Filament\Resources\PostResource;
+use TomatoPHP\FilamentCms\Livewire\BuilderToolbar;
+use TomatoPHP\FilamentCms\Livewire\BuilderToolbarForm;
+use TomatoPHP\FilamentCms\Livewire\BuilderToolbarHeader;
 
 
 class FilamentCMSPlugin implements Plugin
@@ -16,7 +20,8 @@ class FilamentCMSPlugin implements Plugin
     public bool $allowYoutubeImport = false;
     public bool $allowExport = true;
     public bool $allowImport = true;
-
+    public bool $useThemeManager = false;
+    public bool $usePageBuilder = false;
 
     public function getId(): string
     {
@@ -29,7 +34,32 @@ class FilamentCMSPlugin implements Plugin
             CategoryResource::class,
             PostResource::class,
         ]);
+
+        if($this->useThemeManager){
+            $panel->pages([
+                Themes::class
+            ]);
+        }
+
+        if($this->usePageBuilder){
+            $panel->livewireComponents([
+                BuilderToolbar::class,
+            ]);
+        }
     }
+
+    public function useThemeManager(bool $useThemeManager=true): static
+    {
+        $this->useThemeManager = $useThemeManager;
+        return $this;
+    }
+
+    public function usePageBuilder(bool $usePageBuilder=true): static
+    {
+        $this->usePageBuilder = $usePageBuilder;
+        return $this;
+    }
+
 
     public function allowExport(bool $allowExport = true): static
     {

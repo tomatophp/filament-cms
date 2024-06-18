@@ -2,11 +2,21 @@
 
 namespace TomatoPHP\FilamentCms;
 
+use Filament\Forms\Components\TextInput;
 use Illuminate\Support\ServiceProvider;
+use Livewire\Livewire;
+use ProtoneMedia\Splade\Http\SpladeMiddleware;
+use TomatoPHP\FilamentCms\Facades\FilamentCMS;
+use TomatoPHP\FilamentCms\Livewire\BuilderToolbar;
+use TomatoPHP\FilamentCms\Livewire\BuilderToolbarForm;
+use TomatoPHP\FilamentCms\Livewire\BuilderToolbarHeader;
+use TomatoPHP\FilamentCms\Sections\TomatoAboutFeaturesSection;
 use TomatoPHP\FilamentCms\Services\Contracts\CmsType;
+use TomatoPHP\FilamentCms\Services\Contracts\Section;
 use TomatoPHP\FilamentCms\Services\FilamentCMSServices;
 use TomatoPHP\FilamentCms\Services\FilamentCmsTypes;
 
+require_once  __DIR__ .'/helpers.php';
 
 class FilamentCmsServiceProvider extends ServiceProvider
 {
@@ -15,6 +25,7 @@ class FilamentCmsServiceProvider extends ServiceProvider
         //Register generate command
         $this->commands([
            \TomatoPHP\FilamentCms\Console\FilamentCmsInstall::class,
+           \TomatoPHP\FilamentCms\Console\FilamentThemeGenerator::class,
         ]);
 
         //Register Config file
@@ -50,16 +61,51 @@ class FilamentCmsServiceProvider extends ServiceProvider
 
         //Register Routes
         $this->loadRoutesFrom(__DIR__.'/../routes/api.php');
+        $this->loadRoutesFrom(__DIR__.'/../routes/web.php');
 
         $this->app->bind('filament-cms', function() {
             return new FilamentCMSServices();
         });
 
+        $this->loadViewComponentsAs('tomato', [
+            \TomatoPHP\FilamentCms\Views\BuilderToolbar::class,
+        ]);
+
     }
 
     public function boot(): void
     {
-       FilamentCmsTypes::register([
+        FilamentCMS::themes()->register([
+            Section::make('header')
+                ->label('Header')
+                ->view('filament-cms::sections.header')
+                ->form([
+                    TextInput::make('name')
+                        ->label('name')
+                ])
+        ]);
+
+        FilamentCMS::themes()->register([
+            Section::make('hero')
+                ->label('Hero Section')
+                ->view('filament-cms::sections.pages.hero')
+                ->form([
+                    TextInput::make('title')
+                        ->label('title'),
+                    TextInput::make('description')
+                        ->label('description'),
+                    TextInput::make('url')
+                        ->url()
+                        ->label('url'),
+                    TextInput::make('button')
+                        ->label('button'),
+                ])
+        ]);
+
+
+        Livewire::isDiscoverable(BuilderToolbar::class);
+
+        FilamentCmsTypes::register([
            CmsType::make('post')
                 ->label(trans('filament-cms::messages.types.post'))
                 ->color('success')

@@ -321,7 +321,7 @@ class PostResource extends Resource
         if(filament('filament-cms')->allowExport){
             $importActions[] = Tables\Actions\ExportAction::make()->exporter(Export\ExportPosts::class);
         }
-        return $table
+        $table = $table
             ->headerActions($importActions)
             ->columns([
                 Tables\Columns\SpatieMediaLibraryImageColumn::make('feature_image')
@@ -529,6 +529,12 @@ class PostResource extends Resource
                         ->deselectRecordsAfterCompletion()
                 ]),
             ]);
+
+        if(filament('filament-cms')->usePageBuilder){
+            return $table->recordUrl(fn(Post $record): string => $record->type === 'builder' ? url($record->slug) : Pages\ViewPost::getUrl([$record->id]));
+        }
+
+        return $table->recordUrl(fn(Post $record): string => Pages\ViewPost::getUrl([$record->id]));
     }
 
     public static function getRelations(): array

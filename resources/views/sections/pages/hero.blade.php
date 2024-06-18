@@ -1,13 +1,12 @@
-@php $section = $page->meta($section['uuid']); @endphp
 <div class="relative overflow-hidden bg-white dark:bg-zinc-900">
     <div class="pb-80 pt-16 sm:pb-40 sm:pt-24 lg:pb-48 lg:pt-40">
         <div class="relative mx-auto max-w-7xl px-4 sm:static sm:px-6 lg:px-8">
             <div class="sm:max-w-lg">
                 <h1 class="text-4xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100 sm:text-6xl">
-                    {{$section['title_'.app()->getLocale()] ?? "Summer styles are finally here"}}
+                    {{$section['data']['title'] ?? "Summer styles are finally here"}}
                 </h1>
                 <p class="mt-4 text-xl text-zinc-500 dark:text-zinc-300">
-                    {{$section['description_'.app()->getLocale()] ?? "This year, our new summer collection will shelter you from the harsh elements of a world that doesn't care if you live or die."}}
+                    {{$section['data']['description'] ?? "This year, our new summer collection will shelter you from the harsh elements of a world that doesn't care if you live or die."}}
                 </p>
             </div>
             <div>
@@ -47,9 +46,9 @@
                         </div>
                     </div>
 
-                    <x-splade-link :href="$section['url'] ?? '#'" class="inline-block rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-center font-medium text-white hover:bg-indigo-700">
-                        {{$section['button_'.app()->getLocale()] ?? "Shop Collection"}}
-                    </x-splade-link>
+                    <a href="{{ $section['data']['url'] ?? '#' }}" class="inline-block rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-center font-medium text-white hover:bg-indigo-700">
+                        {{$section['data']['button'] ?? "Shop Collection"}}
+                    </a>
                 </div>
             </div>
         </div>

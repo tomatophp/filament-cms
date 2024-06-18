@@ -28,8 +28,12 @@ trait GenerateInfo
             $module->description['sp'] = $this->themeDescription;
             $module->placeholder = "placeholder.webp";
             $module->type = "theme";
+            $module->color = "#F01E19";
+            $module->icon = "heroicon-s-swatch";
+            $module->version = "v1.0.0";
 
             File::put($modulePath, json_encode($module, JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE));
         }
+
     }
 }

@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\File;
+use TomatoPHP\FilamentCms\Models\Post;
 use TomatoPHP\TomatoThemes\Models\Section;
 
 if(!function_exists('theme_assets')) {
@@ -42,10 +43,37 @@ if(!function_exists('theme_setting')) {
     }
 }
 
-if(!function_exists('section')){
-    function section($key){
-        $section = \TomatoPHP\FilamentCms\Facades\FilamentThemes::find($key);
+if(!function_exists('load_page')){
+    function load_page(string $slug,string $name=null): Post
+    {
+        $page = Post::query()
+            ->withTrashed()
+            ->where('type', 'builder')
+            ->where('slug', $slug)
+            ->first();
 
+        if(!$page){
+            $page = new Post();
+            $page->title = $name ?: 'Empty';
+            $page->type = 'builder';
+            $page->slug = $slug;
+            $page->is_published = true;
+            $page->save();
+        }
+        else {
+            if($page->deleted_at){
+                $page->restore();
+            }
+        }
+
+        return $page;
+    }
+}
+
+if(!function_exists('section')){
+    function section($key): \TomatoPHP\FilamentCms\Services\Contracts\Section
+    {
+        $section = \TomatoPHP\FilamentCms\Facades\FilamentCMS::themes()->getSections()->where('key', $key)->first();
         return $section;
     }
 }

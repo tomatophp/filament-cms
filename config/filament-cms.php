@@ -32,4 +32,12 @@ return [
         "en" => "English",
         "ar" => "Arabic"
     ],
+
+
+    "themes" => [
+        "scan" => true,
+        "sections" => [
+            "/vendor/tomatophp/filament-cms/src/Sections"
+        ]
+    ]
 ];

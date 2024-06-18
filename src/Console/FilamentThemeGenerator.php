@@ -6,6 +6,10 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Str;
 use TomatoPHP\ConsoleHelpers\Traits\RunCommand;
 use TomatoPHP\FilamentCms\Generator\GenerateTheme;
+use TomatoPHP\FilamentTranslations\Services\SaveScan;
+use function Laravel\Prompts\error;
+use function Laravel\Prompts\spin;
+use function Laravel\Prompts\text;
 
 class FilamentThemeGenerator extends Command
 {
@@ -16,7 +20,7 @@ class FilamentThemeGenerator extends Command
      *
      * @var string
      */
-    protected $name = 'filament-theme:generate';
+    protected $name = 'filament-cms:theme';
 
     /**
      * The console command description.
@@ -38,20 +42,30 @@ class FilamentThemeGenerator extends Command
      */
     public function handle()
     {
-        $themeName = $this->ask('What is the name of the theme?');
+        $themeName =text(label:'What is the name of the theme?', required: true);
         if(!$themeName){
-            $this->error('Theme name is required');
-            $themeName = $this->ask('What is the name of the theme?');
+            error('Theme name is required');
+            $themeName = text(label:'What is the name of the theme?', required: true);
         }
 
-        $themeDescription = $this->ask('What is the description of the theme?', 'No description');
+        $themeDescription = text(label:'What is the description of the theme?', required: true, default: 'No description');
 
-        $generate = new GenerateTheme(
-            themeName: $themeName,
-            themeDescription: $themeDescription
+
+        $response = spin(
+            function () use ($themeName, $themeDescription) {
+                $generate = new GenerateTheme(
+                    themeName: $themeName,
+                    themeDescription: $themeDescription
+                );
+                $generate->generate();
+
+            },
+            'Generate Theme ...'
         );
-        $generate->generate();
 
-        $this->info('Theme generated successfully');
+        \Laravel\Prompts\info('Theme generated successfully');
+
+        shell_exec('composer dump-autoload');
+
     }
 }
