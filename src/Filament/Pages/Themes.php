@@ -25,17 +25,17 @@ class Themes extends Page implements HasTable
 
     public function getTitle(): string
     {
-        return  "Themes";
+        return  trans('filament-cms::messages.themes.title');
     }
 
     public static function getNavigationLabel(): string
     {
-        return "Themes";
+        return  trans('filament-cms::messages.themes.title');
     }
 
     public static function getNavigationGroup(): ?string
     {
-        return "Content";
+        return  trans('filament-cms::messages.content.group');
     }
 
     public function disableAction(): Action
@@ -44,7 +44,7 @@ class Themes extends Page implements HasTable
             ->iconButton()
             ->icon('heroicon-s-x-circle')
             ->color('danger')
-            ->tooltip(trans('filament-plugins::messages.plugins.actions.disable'))
+            ->tooltip(trans('filament-cms::messages.themes.actions.disable'))
             ->requiresConfirmation()
             ->action(function (array $arguments) {
                 $module = Module::find($arguments['item']['module_name']);
@@ -55,8 +55,8 @@ class Themes extends Page implements HasTable
                 $setting->save();
 
                 Notification::make()
-                    ->title(trans('filament-plugins::messages.plugins.notifications.disabled.title'))
-                    ->body(trans('filament-plugins::messages.plugins.notifications.disabled.body'))
+                    ->title(trans('filament-cms::messages.themes.notifications.disabled.title'))
+                    ->body(trans('filament-cms::messages.themes.notifications.disabled.body'))
                     ->success()
                     ->send();
 
@@ -70,15 +70,15 @@ class Themes extends Page implements HasTable
             ->iconButton()
             ->icon('heroicon-s-trash')
             ->color('danger')
-            ->tooltip(trans('filament-plugins::messages.plugins.actions.delete'))
+            ->tooltip(trans('filament-cms::messages.themes.actions.delete'))
             ->requiresConfirmation()
             ->action(function (array $arguments) {
                 $module = Module::find($arguments['item']['module_name']);
                 $module?->delete();
 
                 Notification::make()
-                    ->title(trans('filament-plugins::messages.plugins.notifications.deleted.title'))
-                    ->body(trans('filament-plugins::messages.plugins.notifications.deleted.body'))
+                    ->title(trans('filament-cms::messages.themes.notifications.deleted.title'))
+                    ->body(trans('filament-cms::messages.themes.notifications.deleted.body'))
                     ->success()
                     ->send();
 
@@ -92,14 +92,14 @@ class Themes extends Page implements HasTable
         return Action::make('active')
             ->iconButton()
             ->icon('heroicon-s-check-circle')
-            ->tooltip(trans('filament-plugins::messages.plugins.actions.active'))
+            ->tooltip(trans('filament-cms::messages.themes.actions.active'))
             ->color('success')
             ->requiresConfirmation()
             ->action(function (array $arguments) {
                 if(!class_exists(json_decode($arguments['item']['providers'])[0])){
                     Notification::make()
-                        ->title(trans('filament-plugins::messages.plugins.notifications.autoload.title'))
-                        ->body(trans('filament-plugins::messages.plugins.notifications.autoload.body'))
+                        ->title(trans('filament-cms::messages.themes.notifications.autoload.title'))
+                        ->body(trans('filament-cms::messages.themes.notifications.autoload.body'))
                         ->danger()
                         ->send();
                     return;
@@ -120,8 +120,8 @@ class Themes extends Page implements HasTable
                 $setting->save();
 
                 Notification::make()
-                    ->title(trans('filament-plugins::messages.plugins.notifications.enabled.title'))
-                    ->body(trans('filament-plugins::messages.plugins.notifications.enabled.body'))
+                    ->title(trans('filament-cms::messages.themes.notifications.enabled.title'))
+                    ->body(trans('filament-cms::messages.themes.notifications.enabled.body'))
                     ->success()
                     ->send();
 
@@ -141,7 +141,7 @@ class Themes extends Page implements HasTable
             })
             ->columns([
                 TextColumn::make('name')
-                    ->label(trans('filament-plugins::messages.plugins.form.name'))
+                    ->label(trans('filament-cms::messages.themes.form.name'))
                     ->searchable(),
             ]);
     }
