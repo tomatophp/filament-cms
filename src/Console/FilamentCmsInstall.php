@@ -37,6 +37,7 @@ class FilamentCmsInstall extends Command
     public function handle()
     {
         $this->info('Publish Vendor Assets');
+        $this->artisanCommand(['vendor:publish --tag="medialibrary-migrations"']);
         $this->artisanCommand(["migrate"]);
         $this->artisanCommand(["optimize:clear"]);
         $this->info('Filament CMS installed successfully.');

@@ -28,6 +28,12 @@ finally register the plugin on `/app/Providers/Filament/AdminPanelProvider.php`
 ->plugin(\TomatoPHP\FilamentCms\FilamentCMSPlugin::make())
 ```
 
+now please publish and migrate media table 
+
+```bash
+php artisan vendor:publish --provider="Spatie\MediaLibrary\MediaLibraryServiceProvider" --tag="medialibrary-migrations"
+php artisan migrate
+```
 ## Screenshots
 
 ![Posts List](https://raw.githubusercontent.com/tomatophp/filament-cms/master/arts/posts-list.png)
