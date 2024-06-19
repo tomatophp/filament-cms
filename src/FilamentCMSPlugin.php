@@ -4,6 +4,7 @@ namespace TomatoPHP\FilamentCms;
 
 use Filament\Contracts\Plugin;
 use Filament\Panel;
+use Filament\SpatieLaravelTranslatablePlugin;
 use TomatoPHP\FilamentCms\Filament\Pages\Themes;
 use TomatoPHP\FilamentCms\Filament\Resources\CategoryResource;
 use TomatoPHP\FilamentCms\Filament\Resources\PostResource;
@@ -22,6 +23,7 @@ class FilamentCMSPlugin implements Plugin
     public bool $allowImport = true;
     public bool $useThemeManager = false;
     public bool $usePageBuilder = false;
+    public array $defaultLocales = ['ar', 'en'];
 
     public function getId(): string
     {
@@ -46,6 +48,14 @@ class FilamentCMSPlugin implements Plugin
                 BuilderToolbar::class,
             ]);
         }
+
+        $panel->plugin(SpatieLaravelTranslatablePlugin::make()->defaultLocales($this->defaultLocales));
+    }
+
+    public function defaultLocales(array $defaultLocales): static
+    {
+        $this->defaultLocales = $defaultLocales;
+        return $this;
     }
 
     public function useThemeManager(bool $useThemeManager=true): static
