@@ -16,6 +16,8 @@ composer require tomatophp/filament-cms
 ```
 after install your package please run this command
 
+**NOTE** if you need to custom some feature please don't use this command and follow the next steps because this step run migration and you need to custom config before run migration.
+
 ```bash
 php artisan filament-cms:install
 ```
@@ -154,6 +156,30 @@ and you need another package for caching and return themes as model we use `sush
 
 ```bash
 composer require calebporzio/sushi
+```
+
+now on your config `filament-cms`
+
+```php
+<?php
+
+return [
+    /*
+     * ---------------------------------------------------
+     * Allow Features
+     * ---------------------------------------------------
+     */
+    "features" => [
+        "theme-manager" => true,
+    ],
+];
+```
+
+now you need to active the settings table
+
+```bash
+php artisan vendor:publish --provider="Spatie\LaravelSettings\LaravelSettingsServiceProvider" --tag="migrations"
+php artisan migrate
 ```
 
 now you can use Theme manager to manage multi frontend themes on your app, on your panel provider `/app/Providers/Filament/AdminPanelProvider.php` add this method

@@ -10,10 +10,11 @@ return [
         "category" => true,
         "posts" => true,
         "comments" => false,
+        "theme-manager" => false,
         "forms" => false,
         "form_requests" => false,
         "tickets" => false,
-        "apis" => false
+        "apis" => false,
     ],
 
     /*

@@ -43,6 +43,7 @@
         "filament/filament": "^3.0.0",
         "tomatophp/filament-icons": "^1.0",
         "filament/spatie-laravel-translatable-plugin": "^3.0.0",
-        "filament/spatie-laravel-media-library-plugin": "^3.0.0"
+        "filament/spatie-laravel-media-library-plugin": "^3.0.0",
+        "filament/spatie-laravel-settings-plugin": "^3.0.0"
     }
 }
