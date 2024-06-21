@@ -71,10 +71,10 @@ if(!function_exists('load_page')){
 }
 
 if(!function_exists('section')){
-    function section($key): \TomatoPHP\FilamentCms\Services\Contracts\Section
+    function section($key): ?\TomatoPHP\FilamentCms\Services\Contracts\Section
     {
         $section = \TomatoPHP\FilamentCms\Facades\FilamentCMS::themes()->getSections()->where('key', $key)->first();
-        return $section;
+        return $section??null;
     }
 }
 

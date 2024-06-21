@@ -75,34 +75,6 @@ class FilamentCmsServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
-        FilamentCMS::themes()->register([
-            Section::make('header')
-                ->label('Header')
-                ->view('filament-cms::sections.header')
-                ->form([
-                    TextInput::make('name')
-                        ->label('name')
-                ])
-        ]);
-
-        FilamentCMS::themes()->register([
-            Section::make('hero')
-                ->label('Hero Section')
-                ->view('filament-cms::sections.pages.hero')
-                ->form([
-                    TextInput::make('title')
-                        ->label('title'),
-                    TextInput::make('description')
-                        ->label('description'),
-                    TextInput::make('url')
-                        ->url()
-                        ->label('url'),
-                    TextInput::make('button')
-                        ->label('button'),
-                ])
-        ]);
-
-
         Livewire::isDiscoverable(BuilderToolbar::class);
 
         FilamentCmsTypes::register([

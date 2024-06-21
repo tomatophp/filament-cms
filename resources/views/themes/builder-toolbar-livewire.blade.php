@@ -12,7 +12,9 @@
             @foreach($this->page->meta('sections') as $section)
                 @php $getSection = section($section['type']) @endphp
 
-                @include($getSection->view)
+                @if($getSection)
+                    @include($getSection->view)
+                @endif
             @endforeach
         @else
             {{ $this->page->body }}
@@ -35,7 +37,9 @@
             @foreach($this->page->meta('sections') as $section)
                 @php $getSection = section($section['type']) @endphp
 
-                @include($getSection->view)
+                @if($getSection)
+                    @include($getSection->view)
+                @endif
             @endforeach
         @else
             {{ $this->page->body }}

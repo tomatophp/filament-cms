@@ -5,6 +5,7 @@ namespace TomatoPHP\FilamentCms\Filament\Resources\PostResource\Pages;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\ToggleButtons;
 use Filament\Notifications\Notification;
+use TomatoPHP\FilamentApi\Traits\InteractWithAPI;
 use TomatoPHP\FilamentCms\Filament\Resources\PostResource;
 use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
