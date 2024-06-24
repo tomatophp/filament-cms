@@ -14,7 +14,7 @@ use TomatoPHP\FilamentCms\Sections\TomatoAboutFeaturesSection;
 use TomatoPHP\FilamentCms\Services\Contracts\CmsType;
 use TomatoPHP\FilamentCms\Services\Contracts\Section;
 use TomatoPHP\FilamentCms\Services\FilamentCMSServices;
-use TomatoPHP\FilamentCms\Services\FilamentCmsTypes;
+use TomatoPHP\FilamentCms\Services\FilamentCMSTypes;
 
 require_once  __DIR__ .'/helpers.php';
 
@@ -77,7 +77,7 @@ class FilamentCmsServiceProvider extends ServiceProvider
     {
         Livewire::isDiscoverable(BuilderToolbar::class);
 
-        FilamentCmsTypes::register([
+        FilamentCMSTypes::register([
            CmsType::make('post')
                 ->label(trans('filament-cms::messages.types.post'))
                 ->color('success')
