@@ -9,7 +9,7 @@ return [
     "features" => [
         "category" => true,
         "posts" => true,
-        "comments" => false,
+        "comments" => true,
         "theme-manager" => false,
         "forms" => false,
         "form_requests" => false,
