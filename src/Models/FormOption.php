@@ -13,12 +13,14 @@ class FormOption extends Model
         'label',
         'hint',
         'placeholder',
-        'required_message'
+        'required_message',
     ];
 
     protected $fillable = [
+        'sub_form',
         'form_id',
         'type',
+        'group',
         'label',
         'name',
         'placeholder',
@@ -34,8 +36,9 @@ class FormOption extends Model
         'is_reactive',
         'reactive_field',
         'reactive_where',
-        'is_from_table',
-        'table_name',
+        'is_relation',
+        'relation_name',
+        'relation_column',
         'options',
         'validation',
         'meta',
@@ -43,12 +46,14 @@ class FormOption extends Model
     ];
 
     protected $casts = [
+        'default' => "json",
         'options' => "array",
         'validation' => "array",
         'lable' => "array",
         'hint'=> "array",
         'placeholder'=> "array",
         'required_message'=> "array",
+        'reactive_where'=> "array",
         'has_options' => "boolean",
         'has_validation' => "boolean",
         'is_required'=> "boolean",
@@ -56,5 +61,11 @@ class FormOption extends Model
         'is_reactive'=> "boolean",
         'is_from_table'=> "boolean"
     ];
+
+
+    public function subForm()
+    {
+        return $this->belongsTo(Form::class, 'sub_form', 'id');
+    }
 
 }

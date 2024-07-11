@@ -7,7 +7,9 @@ use Filament\Panel;
 use Filament\SpatieLaravelTranslatablePlugin;
 use TomatoPHP\FilamentCms\Filament\Pages\Themes;
 use TomatoPHP\FilamentCms\Filament\Resources\CategoryResource;
+use TomatoPHP\FilamentCms\Filament\Resources\FormResource;
 use TomatoPHP\FilamentCms\Filament\Resources\PostResource;
+use TomatoPHP\FilamentCms\Filament\Resources\TicketResource;
 use TomatoPHP\FilamentCms\Livewire\BuilderToolbar;
 use TomatoPHP\FilamentCms\Livewire\BuilderToolbarForm;
 use TomatoPHP\FilamentCms\Livewire\BuilderToolbarHeader;
@@ -23,6 +25,8 @@ class FilamentCMSPlugin implements Plugin
     public bool $allowImport = true;
     public bool $useThemeManager = false;
     public bool $usePageBuilder = false;
+    public bool $useFormBuilder = false;
+//    public bool $useTicketingSystem = false;
     public array $defaultLocales = ['ar', 'en'];
 
     public function getId(): string
@@ -36,6 +40,18 @@ class FilamentCMSPlugin implements Plugin
             CategoryResource::class,
             PostResource::class,
         ]);
+
+        if($this->useFormBuilder){
+            $panel->resources([
+                FormResource::class
+            ]);
+        }
+
+//        if($this->useTicketingSystem){
+//            $panel->resources([
+//                TicketResource::class
+//            ]);
+//        }
 
         if($this->useThemeManager){
             $panel->pages([
@@ -51,6 +67,18 @@ class FilamentCMSPlugin implements Plugin
 
         $panel->plugin(SpatieLaravelTranslatablePlugin::make()->defaultLocales($this->defaultLocales));
     }
+
+    public function useFormBuilder(bool $useFormBuilder=true): static
+    {
+        $this->useFormBuilder = $useFormBuilder;
+        return $this;
+    }
+
+//    public function useTicketingSystem(bool $useTicketingSystem=true): static
+//    {
+//        $this->useTicketingSystem = $useTicketingSystem;
+//        return $this;
+//    }
 
     public function defaultLocales(array $defaultLocales): static
     {

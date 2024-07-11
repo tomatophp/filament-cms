@@ -42,6 +42,12 @@ php artisan migrate
 ![Posts View](https://raw.githubusercontent.com/tomatophp/filament-cms/master/arts/view-post.png)
 ![Category List](https://raw.githubusercontent.com/tomatophp/filament-cms/master/arts/category-list.png)
 ![Category Create](https://raw.githubusercontent.com/tomatophp/filament-cms/master/arts/create-category.png)
+![Form List](https://raw.githubusercontent.com/tomatophp/filament-cms/master/arts/form-list.png)
+![Create Form](https://raw.githubusercontent.com/tomatophp/filament-cms/master/arts/create-form.png)
+![From Fields](https://raw.githubusercontent.com/tomatophp/filament-cms/master/arts/form-fields.png)
+![Create Field](https://raw.githubusercontent.com/tomatophp/filament-cms/master/arts/create-field.png)
+![Form Preview](https://raw.githubusercontent.com/tomatophp/filament-cms/master/arts/preview-form.png)
+![View Form Request](https://raw.githubusercontent.com/tomatophp/filament-cms/master/arts/view-request.png)
 
 ## Features
 
@@ -53,7 +59,7 @@ php artisan migrate
 - [x] Content Import & Export
 - [x] Page Builder
 - [x] Theme Manager
-- [ ] Form Builder
+- [x] Form Builder
 - [ ] Ticketing System
 - [ ] REST API
 
@@ -264,6 +270,43 @@ now if you open your page you will find the builder view like this
 
 ![Page Builder](https://raw.githubusercontent.com/tomatophp/filament-cms/master/arts/page-builder.png)
 ![Page Builder Prview](https://raw.githubusercontent.com/tomatophp/filament-cms/master/arts/page-builder-preview.png)
+
+## Add Form Field Type
+
+you can add more fields to the form builder by use this method on your provider.
+
+```php
+use TomatoPHP\FilamentCms\Services\FilamentCMSFormFields;
+use TomatoPHP\FilamentCms\Services\Contracts\CmsFormFieldType;
+
+FilamentCMSFormFields::register([
+    CmsFormFieldType::make('code')
+        ->className(CodeEditor::class)
+        ->color('warning')
+        ->icon('heroicon-s-code-bracket-square')
+        ->label('Code Editor'),
+]);
+```
+
+## Use Your Form Builder
+
+after create your form you can use it by `key` like this
+
+```php
+use TomatoPHP\FilamentCms\Services\FilamentCMSFormBuilder;
+
+FilamentCMSFormBuilder::make('xvssd')->build()
+```
+
+## Use Form Requests to Submit your form data
+
+you can use form requests to submit your form data by use this method on your provider.
+
+```php
+use TomatoPHP\FilamentCms\Services\FilamentCMSFormBuilder;
+
+FilamentCMSFormBuilder::make('xvssd')->send($data)
+```
 
 ## Publish Assets
 

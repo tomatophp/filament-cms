@@ -49,4 +49,9 @@ class Form extends Model
     {
         return $this->hasMany(FormOption::class, 'form_id', 'id')->orderBy('order', 'asc');
     }
+
+    public function requests()
+    {
+        return $this->hasMany(FormRequest::class, 'form_id', 'id');
+    }
 }

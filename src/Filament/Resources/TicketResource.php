@@ -17,7 +17,27 @@ class TicketResource extends Resource
 {
     protected static ?string $model = Ticket::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-lifebuoy';
+
+    public static function getNavigationGroup(): ?string
+    {
+        return trans('filament-cms::messages.content.group');
+    }
+
+    public static function getPluralLabel(): ?string
+    {
+        return trans('filament-cms::messages.tickets.title');
+    }
+
+    public static function getLabel(): ?string
+    {
+        return trans('filament-cms::messages.tickets.single');
+    }
+
+    public static function getNavigationLabel(): string
+    {
+        return trans('filament-cms::messages.tickets.title');
+    }
 
     public static function form(Form $form): Form
     {

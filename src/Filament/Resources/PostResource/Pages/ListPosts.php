@@ -17,16 +17,6 @@ use TomatoPHP\FilamentCms\Services\FilamentCMSTypes;
 
 class ListPosts extends ListRecords
 {
-    use ListRecords\Concerns\Translatable;
-
-    #[Reactive]
-    public ?string $activeLocale = null;
-
-    public static function getTranslatableLocales(): array
-    {
-        return ['en', 'ar'];
-    }
-
     protected static string $resource = PostResource::class;
 
     protected function getHeaderActions(): array
@@ -114,7 +104,6 @@ class ListPosts extends ListRecords
                         ->send();
                 }),
             Actions\CreateAction::make(),
-            Actions\LocaleSwitcher::make()
         ];
     }
 }

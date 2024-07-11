@@ -22,4 +22,9 @@ class FilamentCMSServices
     {
         return new FilamentCMSThemes();
     }
+
+    public function formFields(): FilamentCMSFormFields
+    {
+        return new FilamentCMSFormFields();
+    }
 }

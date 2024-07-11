@@ -11,6 +11,11 @@ use Spatie\MediaLibrary\InteractsWithMedia;
  * @property integer $form_id
  * @property string $model_type
  * @property integer $model_id
+ * @property string $service_type
+ * @property integer $service_id
+ * @property string $description
+ * @property string $date
+ * @property string $time
  * @property string $status
  * @property mixed $payload
  * @property string $created_at
@@ -24,7 +29,20 @@ class FormRequest extends Model implements HasMedia
     /**
      * @var array
      */
-    protected $fillable = ['form_id', 'model_type', 'model_id', 'status', 'payload', 'created_at', 'updated_at'];
+    protected $fillable = [
+        'form_id',
+        'model_type',
+        'model_id',
+        'service_type',
+        'service_id',
+        'description',
+        'date',
+        'time',
+        'status',
+        'payload',
+        'created_at',
+        'updated_at'
+    ];
 
     protected $casts = [
         "payload" => "array"
