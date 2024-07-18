@@ -1,3 +1,8 @@
+
+@props([
+    'livewire' => null,
+])
+
 @if($allowLayout)
     <!doctype html>
 <html
@@ -13,7 +18,6 @@
     <meta charset="utf-8" />
     <meta name="csrf-token" content="{{ csrf_token() }}" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-
 
 
     @if ($favicon = filament()->getFavicon())
@@ -62,16 +66,15 @@
 
     @stack('styles')
 
-    @vite(['resources/js/app.js'])
-
     @livewireStyles
-
-    @spladeHead
 </head>
-<body>
-
+<body class="fi-body fi-panel-admin min-h-screen bg-gray-50 font-normal text-gray-950 antialiased dark:bg-gray-950 dark:text-white">
+    @livewire(\TomatoPHP\FilamentCms\Livewire\BuilderToolbar::class, ['page'=>$page])
+@else
+    @livewire(\TomatoPHP\FilamentCms\Livewire\BuilderToolbar::class, ['page'=>$page])
 @endif
-@livewire(\TomatoPHP\FilamentCms\Livewire\BuilderToolbar::class, ['page'=>$page])
+
+
 
 @if($allowLayout)
     @livewire(Filament\Livewire\Notifications::class)
@@ -92,4 +95,6 @@
     @livewireScripts
     </body>
     </html>
+@else
+    @livewire(\TomatoPHP\FilamentCms\Livewire\BuilderToolbar::class, ['page'=>$page])
 @endif

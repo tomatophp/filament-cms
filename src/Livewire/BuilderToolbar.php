@@ -36,20 +36,12 @@ class BuilderToolbar extends Component  implements HasForms, HasActions
             "sections" => $this->page->meta('sections')??[]
         ]);
 
-        $this->dispatch('builderToolbarRendered');
-
         if(session()->has('preview_' . $this->page->id)){
             $this->preview = session()->get('preview_' . $this->page->id);
         }
         else {
             session()->put('preview_' . $this->page->id, $this->preview);
         }
-    }
-
-    #[On('builderToolbarRendered')]
-    public function load(): void
-    {
-        $this->loaded = true;
     }
 
     public function editPageAction()
@@ -82,7 +74,8 @@ class BuilderToolbar extends Component  implements HasForms, HasActions
             $blocks[] = Builder\Block::make($section->key)
                 ->schema($section->form);
         }
-        return $form->schema([
+        return $form
+            ->schema([
             Forms\Components\Builder::make('sections')
                 ->blocks($blocks)
                 ->collapsible()

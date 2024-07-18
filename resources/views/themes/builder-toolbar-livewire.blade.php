@@ -13,7 +13,7 @@
                 @php $getSection = section($section['type']) @endphp
 
                 @if($getSection)
-                    @include($getSection->view)
+                    @include($getSection->view, ['section' => $section])
                 @endif
             @endforeach
         @else
@@ -21,7 +21,7 @@
         @endif
     @else
         <div class="p-4">
-            <form wire:submit="saveSections">
+            <form wire:submit="saveSections" id="{{$this->page->id}}">
                 {{ $this->form }}
 
                 <x-filament::button wire:click="saveSections">
