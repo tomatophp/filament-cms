@@ -8,8 +8,8 @@
         {{__("Please try another word or contact us to add an article")}}
     </p>
 
-    <x-splade-link href="{{ \Illuminate\Support\Str::of(url()->current())->explode('?')[0] }}"
+    <a href="{{ \Illuminate\Support\Str::of(url()->current())->explode('?')[0] }}"
                    class="inline-flex items-center px-5 py-3 mt-8 font-medium text-white rounded-lg bg-main mb-4">
         {{__("Back to the main page")}}
-    </x-splade-link>
+    </a>
 </div>
