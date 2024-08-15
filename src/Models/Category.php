@@ -82,4 +82,9 @@ class Category extends Model implements HasMedia
     {
         return $this->hasMany('TomatoPHP\FilamentCms\Models\CategoriesMeta');
     }
+
+    public function posts()
+    {
+        return $this->belongsToMany(Post::class, 'posts_has_category', 'category_id', 'post_id');
+    }
 }
