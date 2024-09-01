@@ -124,9 +124,9 @@ class FilamentCMSPlugin implements Plugin
         return $this;
     }
 
-    public function allowGitHubImport(bool $allowBehanceImport = true): static
+    public function allowGitHubImport(bool $allowGitHubImport = true): static
     {
-        $this->allowGitHubImport = $allowBehanceImport;
+        $this->allowGitHubImport = $allowGitHubImport;
         return $this;
     }
 
