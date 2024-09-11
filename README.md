@@ -1,9 +1,8 @@
 ![Screenshot](https://raw.githubusercontent.com/tomatophp/filament-cms/master/arts/3x1io-tomato-cms.jpg)
 
-# Filament CMS
+# Filament CMS Builder
 
 [![Latest Stable Version](https://poser.pugx.org/tomatophp/filament-cms/version.svg)](https://packagist.org/packages/tomatophp/filament-cms)
-[![PHP Version Require](http://poser.pugx.org/tomatophp/filament-cms/require/php)](https://packagist.org/packages/tomatophp/filament-cms)
 [![License](https://poser.pugx.org/tomatophp/filament-cms/license.svg)](https://packagist.org/packages/tomatophp/filament-cms)
 [![Downloads](https://poser.pugx.org/tomatophp/filament-cms/d/total.svg)](https://packagist.org/packages/tomatophp/filament-cms)
 
