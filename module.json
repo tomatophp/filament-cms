@@ -21,7 +21,7 @@
     },
     "color": "#8911d9",
     "icon": "heroicon-c-pencil",
-    "placeholder": "placeholder.webp",
+    "placeholder": "https://raw.githubusercontent.com/tomatophp/filament-cms/master/arts/3x1io-tomato-cms.jpg",
     "type": "plugin",
     "version": "v1.0.18",
     "github" : "https://github.com/tomatophp/filament-cms",
