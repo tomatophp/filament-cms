@@ -5,6 +5,7 @@ namespace TomatoPHP\FilamentCms;
 use Filament\Contracts\Plugin;
 use Filament\Panel;
 use Filament\SpatieLaravelTranslatablePlugin;
+use Nwidart\Modules\Module;
 use TomatoPHP\FilamentCms\Filament\Pages\Themes;
 use TomatoPHP\FilamentCms\Filament\Resources\CategoryResource;
 use TomatoPHP\FilamentCms\Filament\Resources\FormResource;
@@ -29,6 +30,8 @@ class FilamentCMSPlugin implements Plugin
 //    public bool $useTicketingSystem = false;
     public array $defaultLocales = ['ar', 'en'];
 
+    private bool $isActive = false;
+
     public function getId(): string
     {
         return 'filament-cms';
@@ -36,16 +39,27 @@ class FilamentCMSPlugin implements Plugin
 
     public function register(Panel $panel): void
     {
-        $panel->resources([
-            CategoryResource::class,
-            PostResource::class,
-        ]);
-
-        if($this->useFormBuilder){
-            $panel->resources([
-                FormResource::class
-            ]);
+        if(class_exists(Module::class)){
+            if(\Nwidart\Modules\Facades\Module::find('FilamentCms')->isEnabled()){
+                $this->isActive = true;
+            }
         }
+        else {
+            $this->isActive = true;
+        }
+
+        if($this->isActive) {
+
+            $panel->resources([
+                CategoryResource::class,
+                PostResource::class,
+            ]);
+
+            if ($this->useFormBuilder) {
+                $panel->resources([
+                    FormResource::class
+                ]);
+            }
 
 //        if($this->useTicketingSystem){
 //            $panel->resources([
@@ -53,19 +67,20 @@ class FilamentCMSPlugin implements Plugin
 //            ]);
 //        }
 
-        if($this->useThemeManager){
-            $panel->pages([
-                Themes::class
-            ]);
-        }
+            if ($this->useThemeManager) {
+                $panel->pages([
+                    Themes::class
+                ]);
+            }
 
-        if($this->usePageBuilder){
-            $panel->livewireComponents([
-                BuilderToolbar::class,
-            ]);
-        }
+            if ($this->usePageBuilder) {
+                $panel->livewireComponents([
+                    BuilderToolbar::class,
+                ]);
+            }
 
-        $panel->plugin(SpatieLaravelTranslatablePlugin::make()->defaultLocales($this->defaultLocales));
+            $panel->plugin(SpatieLaravelTranslatablePlugin::make()->defaultLocales($this->defaultLocales));
+        }
     }
 
     public function useFormBuilder(bool $useFormBuilder=true): static
