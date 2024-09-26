@@ -24,10 +24,12 @@ class FilamentCMSPlugin implements Plugin
     public bool $allowYoutubeImport = false;
     public bool $allowExport = true;
     public bool $allowImport = true;
+    public bool $usePost = false;
+    public bool $useCategory = false;
     public bool $useThemeManager = false;
     public bool $usePageBuilder = false;
     public bool $useFormBuilder = false;
-//    public bool $useTicketingSystem = false;
+    //    public bool $useTicketingSystem = false;
     public array $defaultLocales = ['ar', 'en'];
 
     private bool $isActive = false;
@@ -39,19 +41,24 @@ class FilamentCMSPlugin implements Plugin
 
     public function register(Panel $panel): void
     {
-        if(class_exists(Module::class) && \Nwidart\Modules\Facades\Module::find('FilamentCms')?->isEnabled()){
+        if (class_exists(Module::class) && \Nwidart\Modules\Facades\Module::find('FilamentCms')?->isEnabled()) {
             $this->isActive = true;
-        }
-        else {
+        } else {
             $this->isActive = true;
         }
 
-        if($this->isActive) {
+        if ($this->isActive) {
 
-            $panel->resources([
-                CategoryResource::class,
-                PostResource::class,
-            ]);
+            if ($this->usePost) {
+                $panel->resources([
+                    PostResource::class
+                ]);
+            }
+            if ($this->useCategory) {
+                $panel->resources([
+                    CategoryResource::class
+                ]);
+            }
 
             if ($this->useFormBuilder) {
                 $panel->resources([
@@ -59,11 +66,11 @@ class FilamentCMSPlugin implements Plugin
                 ]);
             }
 
-//        if($this->useTicketingSystem){
-//            $panel->resources([
-//                TicketResource::class
-//            ]);
-//        }
+            //        if($this->useTicketingSystem){
+            //            $panel->resources([
+            //                TicketResource::class
+            //            ]);
+            //        }
 
             if ($this->useThemeManager) {
                 $panel->pages([
@@ -81,17 +88,17 @@ class FilamentCMSPlugin implements Plugin
         }
     }
 
-    public function useFormBuilder(bool $useFormBuilder=true): static
+    public function useFormBuilder(bool $useFormBuilder = true): static
     {
         $this->useFormBuilder = $useFormBuilder;
         return $this;
     }
 
-//    public function useTicketingSystem(bool $useTicketingSystem=true): static
-//    {
-//        $this->useTicketingSystem = $useTicketingSystem;
-//        return $this;
-//    }
+    //    public function useTicketingSystem(bool $useTicketingSystem=true): static
+    //    {
+    //        $this->useTicketingSystem = $useTicketingSystem;
+    //        return $this;
+    //    }
 
     public function defaultLocales(array $defaultLocales): static
     {
@@ -99,13 +106,25 @@ class FilamentCMSPlugin implements Plugin
         return $this;
     }
 
-    public function useThemeManager(bool $useThemeManager=true): static
+    public function usePost(bool $usePost = true): static
+    {
+        $this->usePost = $usePost;
+        return $this;
+    }
+
+    public function useCategory(bool $useCategory = true): static
+    {
+        $this->useCategory = $useCategory;
+        return $this;
+    }
+
+    public function useThemeManager(bool $useThemeManager = true): static
     {
         $this->useThemeManager = $useThemeManager;
         return $this;
     }
 
-    public function usePageBuilder(bool $usePageBuilder=true): static
+    public function usePageBuilder(bool $usePageBuilder = true): static
     {
         $this->usePageBuilder = $usePageBuilder;
         return $this;
