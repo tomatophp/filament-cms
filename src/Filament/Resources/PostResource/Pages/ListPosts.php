@@ -2,6 +2,8 @@
 
 namespace TomatoPHP\FilamentCms\Filament\Resources\PostResource\Pages;
 
+use Filament\Forms\Components\KeyValue;
+use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\ToggleButtons;
 use Filament\Notifications\Notification;
@@ -59,42 +61,45 @@ class ListPosts extends ListRecords
                         ->columnSpanFull()
                         ->hiddenLabel()
                         ->required(),
-                    TextInput::make('url')
-                        ->label(trans('filament-cms::messages.content.posts.import.url'))
-                        ->url()
-                        ->required(),
-                    TextInput::make('redirect_url')
-                        ->label(trans('filament-cms::messages.content.posts.import.redirect_url'))
-                        ->url(),
+                    KeyValue::make('urls')
+                        ->required()
+                        ->keyLabel(trans('filament-cms::messages.content.posts.import.url'))
+                        ->valueLabel(trans('filament-cms::messages.content.posts.import.redirect_url')),
                 ])
                 ->action(function (array $data){
-                    if($data['type'] === 'open-source' && $data['url']){
-                        dispatch(new GitHubMetaGetterJob(
-                            url: $data['url'],
-                            redirect: $data['redirect_url'],
-                            userId: auth()->user()->id,
-                            userType: get_class(auth()->user()),
-                            panel: filament()->getCurrentPanel()->getId()
-                        ));
+                    if($data['type'] === 'open-source' && count($data['urls'])){
+                        foreach ($data['urls'] as $url=>$redirect){
+                            dispatch(new GitHubMetaGetterJob(
+                                url: $url,
+                                redirect: $redirect,
+                                userId: auth()->user()->id,
+                                userType: get_class(auth()->user()),
+                                panel: filament()->getCurrentPanel()->getId()
+                            ));
+                        }
                     }
 
-                    if($data['type'] === 'video' && $data['url']){
-                        dispatch(new YoutubeMetaGetterJob(
-                            url: $data['url'],
-                            redirect: $data['redirect_url'],
-                            userId:auth()->user()->id,
-                            userType:get_class(auth()->user()),
-                            panel: filament()->getCurrentPanel()->getId()
-                        ));
+                    if($data['type'] === 'video' && count($data['urls'])){
+                        foreach ($data['urls'] as $url=>$redirect) {
+                            dispatch(new YoutubeMetaGetterJob(
+                                url: $url,
+                                redirect: $redirect,
+                                userId: auth()->user()->id,
+                                userType: get_class(auth()->user()),
+                                panel: filament()->getCurrentPanel()->getId()
+                            ));
+                        }
                     }
 
-                    if($data['type'] === 'portfolio' && $data['url']){
-                        dispatch(new BehanceMetaGetterJob(
-                            url: $data['url'],
-                            userId: auth()->user()->id,
-                            userType: get_class(auth()->user()),
-                            panel: filament()->getCurrentPanel()->getId()
-                        ));
+                    if($data['type'] === 'portfolio' && count($data['urls'])){
+                        foreach ($data['urls'] as $url=>$redirect) {
+                            dispatch(new BehanceMetaGetterJob(
+                                url: $url,
+                                userId: auth()->user()->id,
+                                userType: get_class(auth()->user()),
+                                panel: filament()->getCurrentPanel()->getId()
+                            ));
+                        }
                     }
 
                     Notification::make()
