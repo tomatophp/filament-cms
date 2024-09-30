@@ -18,19 +18,19 @@ use TomatoPHP\FilamentCms\Livewire\BuilderToolbarHeader;
 
 class FilamentCMSPlugin implements Plugin
 {
-    public bool $allowUrlImport = true;
-    public bool $allowBehanceImport = false;
-    public bool $allowGitHubImport = true;
-    public bool $allowYoutubeImport = false;
-    public bool $allowExport = true;
-    public bool $allowImport = true;
-    public bool $usePost = false;
-    public bool $useCategory = false;
-    public bool $useThemeManager = false;
-    public bool $usePageBuilder = false;
-    public bool $useFormBuilder = false;
-    //    public bool $useTicketingSystem = false;
-    public array $defaultLocales = ['ar', 'en'];
+    public static bool $allowUrlImport = true;
+    public static bool $allowBehanceImport = false;
+    public static bool $allowGitHubImport = true;
+    public static bool $allowYoutubeImport = false;
+    public static bool $allowExport = false;
+    public static bool $allowImport = false;
+    public static bool $usePost = true;
+    public static bool $useCategory = true;
+    public static bool $useThemeManager = false;
+    public static bool $usePageBuilder = false;
+    public static bool $useFormBuilder = false;
+//    public static bool $useTicketingSystem = false;
+    public static array $defaultLocales = ['ar', 'en'];
 
     private bool $isActive = false;
 
@@ -49,122 +49,122 @@ class FilamentCMSPlugin implements Plugin
 
         if ($this->isActive) {
 
-            if ($this->usePost) {
+            if (self::$usePost) {
                 $panel->resources([
                     PostResource::class
                 ]);
             }
-            if ($this->useCategory) {
+            if (self::$useCategory) {
                 $panel->resources([
                     CategoryResource::class
                 ]);
             }
 
-            if ($this->useFormBuilder) {
+            if (self::$useFormBuilder) {
                 $panel->resources([
                     FormResource::class
                 ]);
             }
 
-            //        if($this->useTicketingSystem){
-            //            $panel->resources([
-            //                TicketResource::class
-            //            ]);
-            //        }
+//            if(self::$useTicketingSystem){
+//                $panel->resources([
+//                    TicketResource::class
+//                ]);
+//            }
 
-            if ($this->useThemeManager) {
+            if (self::$useThemeManager) {
                 $panel->pages([
                     Themes::class
                 ]);
             }
 
-            if ($this->usePageBuilder) {
+            if (self::$usePageBuilder) {
                 $panel->livewireComponents([
                     BuilderToolbar::class,
                 ]);
             }
 
-            $panel->plugin(SpatieLaravelTranslatablePlugin::make()->defaultLocales($this->defaultLocales));
+            $panel->plugin(SpatieLaravelTranslatablePlugin::make()->defaultLocales(self::$defaultLocales));
         }
     }
 
     public function useFormBuilder(bool $useFormBuilder = true): static
     {
-        $this->useFormBuilder = $useFormBuilder;
+        self::$useFormBuilder = $useFormBuilder;
         return $this;
     }
 
     //    public function useTicketingSystem(bool $useTicketingSystem=true): static
     //    {
-    //        $this->useTicketingSystem = $useTicketingSystem;
+    //        self::$useTicketingSystem = $useTicketingSystem;
     //        return $this;
     //    }
 
     public function defaultLocales(array $defaultLocales): static
     {
-        $this->defaultLocales = $defaultLocales;
+        self::$defaultLocales = $defaultLocales;
         return $this;
     }
 
     public function usePost(bool $usePost = true): static
     {
-        $this->usePost = $usePost;
+        self::$usePost = $usePost;
         return $this;
     }
 
     public function useCategory(bool $useCategory = true): static
     {
-        $this->useCategory = $useCategory;
+        self::$useCategory = $useCategory;
         return $this;
     }
 
     public function useThemeManager(bool $useThemeManager = true): static
     {
-        $this->useThemeManager = $useThemeManager;
+        self::$useThemeManager = $useThemeManager;
         return $this;
     }
 
     public function usePageBuilder(bool $usePageBuilder = true): static
     {
-        $this->usePageBuilder = $usePageBuilder;
+        self::$usePageBuilder = $usePageBuilder;
         return $this;
     }
 
 
     public function allowExport(bool $allowExport = true): static
     {
-        $this->allowExport = $allowExport;
+        self::$allowExport = $allowExport;
         return $this;
     }
 
     public function allowImport(bool $allowImport = true): static
     {
-        $this->allowImport = $allowImport;
+        self::$allowImport = $allowImport;
         return $this;
     }
 
 
     public function allowUrlImport(bool $allowUrlImport = true): static
     {
-        $this->allowUrlImport = $allowUrlImport;
+        self::$allowUrlImport = $allowUrlImport;
         return $this;
     }
 
     public function allowBehanceImport(bool $allowBehanceImport = true): static
     {
-        $this->allowBehanceImport = $allowBehanceImport;
+        self::$allowBehanceImport = $allowBehanceImport;
         return $this;
     }
 
     public function allowGitHubImport(bool $allowGitHubImport = true): static
     {
-        $this->allowGitHubImport = $allowGitHubImport;
+        self::$allowGitHubImport = $allowGitHubImport;
         return $this;
     }
 
     public function allowYoutubeImport(bool $allowYoutubeImport = true): static
     {
-        $this->allowYoutubeImport = $allowYoutubeImport;
+        self::$allowYoutubeImport = $allowYoutubeImport;
         return $this;
     }
 

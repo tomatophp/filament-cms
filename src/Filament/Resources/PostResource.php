@@ -315,10 +315,10 @@ class PostResource extends Resource
     public static function table(Table $table): Table
     {
         $importActions = [];
-        if(filament('filament-cms')->allowImport){
+        if(filament('filament-cms')::$allowImport){
             $importActions[] = Tables\Actions\ImportAction::make()->importer(Import\ImportPosts::class);
         }
-        if(filament('filament-cms')->allowExport){
+        if(filament('filament-cms')::$allowExport){
             $importActions[] = Tables\Actions\ExportAction::make()->exporter(Export\ExportPosts::class);
         }
         $table = $table
@@ -530,7 +530,7 @@ class PostResource extends Resource
                 ]),
             ]);
 
-        if(filament('filament-cms')->usePageBuilder){
+        if(filament('filament-cms')::$usePageBuilder){
             return $table->recordUrl(fn(Post $record): string => $record->type === 'builder' ? url($record->slug) : Pages\ViewPost::getUrl([$record->id]));
         }
 

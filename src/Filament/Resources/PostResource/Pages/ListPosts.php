@@ -25,18 +25,18 @@ class ListPosts extends ListRecords
         $icons = [];
         $colors = [];
 
-        if(filament('filament-cms')->allowGitHubImport){
+        if(filament('filament-cms')::$allowGitHubImport){
             $options["open-source"] = trans('filament-cms::messages.content.posts.import.github_type');
             $icons["open-source"] = "heroicon-o-code-bracket-square";
             $colors["open-source"] = "success";
         }
-        if(filament('filament-cms')->allowBehanceImport) {
+        if(filament('filament-cms')::$allowBehanceImport) {
             $options["portfolio"] = trans('filament-cms::messages.content.posts.import.behance_type');
             $icons["portfolio"] = "heroicon-o-photo";
             $colors["portfolio"] = "warning";
         }
 
-        if(config('filament-cms.youtube_key') && filament('filament-cms')->allowYoutubeImport){
+        if(config('filament-cms.youtube_key') && filament('filament-cms')::$allowYoutubeImport){
             $options["video"] = trans('filament-cms::messages.content.posts.import.youtube_type');
             $icons["video"] = "heroicon-o-video-camera";
             $colors["video"] = "primary";
@@ -44,7 +44,7 @@ class ListPosts extends ListRecords
 
         return [
             Actions\Action::make('import_from_url')
-                ->hidden(!filament('filament-cms')->allowUrlImport)
+                ->hidden(!filament('filament-cms')::$allowUrlImport)
                 ->label(trans('filament-cms::messages.content.posts.import.button'))
                 ->icon('heroicon-o-inbox-arrow-down')
                 ->form([
