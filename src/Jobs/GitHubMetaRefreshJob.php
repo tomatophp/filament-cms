@@ -28,6 +28,7 @@ class GitHubMetaRefreshJob implements ShouldQueue
             $github = Http::get('https://api.github.com/repos/' . $repo)->json();
             if(isset($github['id'])){
                 $gitReadme  = Http::get('https://raw.githubusercontent.com/'.$repo.'/'.$github['default_branch'].'/README.md')->body();
+                $packgiest = Http::get('https://packagist.org/packages/'.$github['full_name'].'.json')->json();
                 if($gitReadme){
                     $post->body = [
                         "ar" => $gitReadme,
@@ -38,7 +39,19 @@ class GitHubMetaRefreshJob implements ShouldQueue
                         "en" => $github['description']
                     ];
                     $post->meta = $github;
+                    if(!isset($packgiest['status'])){
+                        $post->keywords = [
+                            'ar' => implode( ',', collect($packgiest['package']['versions'])->first()['keywords']),
+                            'en' => implode( ',', collect($packgiest['package']['versions'])->first()['keywords'])
+                        ];
+                    }
                     $post->save();
+
+                    if(!isset($packgiest['status'])){
+                        $post->meta('downloads_total', $packgiest['package']['downloads']['total']);
+                        $post->meta('downloads_monthly', $packgiest['package']['downloads']['monthly']);
+                        $post->meta('downloads_daily', $packgiest['package']['downloads']['daily']);
+                    }
 
                     $post->meta('github_starts', $github['stargazers_count']);
                     $post->meta('github_watchers', $github['watchers_count']);

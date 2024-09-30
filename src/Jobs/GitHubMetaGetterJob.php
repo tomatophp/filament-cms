@@ -36,75 +36,92 @@ class GitHubMetaGetterJob implements ShouldQueue
      */
     public function handle(): void
     {
-        $user = $this->userType::find($this->userId);
-        $repo = Str::of($this->url)->remove('https://github.com/', '')->remove('https://www.github.com/','')->toString();
-        $github = Http::get('https://api.github.com/repos/' . $repo)->json();
-        if(isset($github['id'])){
-            $gitReadme  = Http::get('https://raw.githubusercontent.com/'.$repo.'/'.$github['default_branch'].'/README.md')->body();
-            if($gitReadme){
-                $checkIfPostExists = Post::query()->withTrashed()->where('slug', str($github['full_name'])->explode('/')->last())->first();
-                if($checkIfPostExists){
-                    if($checkIfPostExists->deleted_at){
-                        $checkIfPostExists->restore();
+        try{
+            $user = $this->userType::find($this->userId);
+            $repo = Str::of($this->url)->remove('https://github.com/', '')->remove('https://www.github.com/','')->toString();
+            $github = Http::get('https://api.github.com/repos/' . $repo)->json();
+            if(isset($github['id'])){
+                $gitReadme  = Http::get('https://raw.githubusercontent.com/'.$repo.'/'.$github['default_branch'].'/README.md')->body();
+                $packgiest = Http::get('https://packagist.org/packages/'.$github['full_name'].'.json')->json();
+                if($gitReadme){
+                    $checkIfPostExists = Post::query()->withTrashed()->where('slug', str($github['full_name'])->explode('/')->last())->first();
+                    if($checkIfPostExists){
+                        if($checkIfPostExists->deleted_at){
+                            $checkIfPostExists->restore();
+                        }
+                        $checkIfPostExists->clearMediaCollection('feature_image');
+                        $post = $checkIfPostExists;
                     }
-                    $checkIfPostExists->clearMediaCollection('feature_image');
-                    $post = $checkIfPostExists;
+                    else {
+                        $post = new Post();
+                    }
+
+                    $post->title = [
+                        "ar" => $github['name'],
+                        "en" => $github['name']
+                    ];
+                    $post->body = [
+                        "ar" => $gitReadme,
+                        "en" => $gitReadme
+                    ];
+                    $post->short_description = [
+                        "ar" => $github['description'],
+                        "en" => $github['description']
+                    ];
+                    $post->slug = str($github['full_name'])->explode('/')->last();
+                    $post->meta = $github;
+                    $post->meta_url = $this->url;
+                    $post->type = 'open-source';
+                    $post->is_published = true;
+                    $post->published_at = now();
+                    $post->author_type = $this->userType;
+                    $post->author_id = $this->userId;
+                    if(!isset($packgiest['status'])){
+                        $post->keywords = [
+                            'ar' => implode( ',', collect($packgiest['package']['versions'])->first()['keywords']),
+                            'en' => implode( ',', collect($packgiest['package']['versions'])->first()['keywords'])
+                        ];
+                    }
+                    $post->save();
+
+                    if(!isset($packgiest['status'])){
+                        $post->meta('downloads_total', $packgiest['package']['downloads']['total']);
+                        $post->meta('downloads_monthly', $packgiest['package']['downloads']['monthly']);
+                        $post->meta('downloads_daily', $packgiest['package']['downloads']['daily']);
+                    }
+
+                    $post->meta('github_starts', $github['stargazers_count']);
+                    $post->meta('github_watchers', $github['watchers_count']);
+                    $post->meta('github_language', $github['language']);
+                    $post->meta('github_forks', $github['forks_count']);
+                    $post->meta('github_open_issues', $github['open_issues_count']);
+                    $post->meta('github_default_branch', $github['default_branch']);
+                    $post->meta('github_docs', $github['homepage']);
+
+                    $post->addMediaFromUrl($github['owner']['avatar_url'])->toMediaCollection('feature_image');
+
+                    Notification::make()
+                        ->title(trans('filament-cms::messages.content.posts.import.github.notifications.title'))
+                        ->body(trans('filament-cms::messages.content.posts.import.github.notifications.description', ['name'=> $github['full_name']]))
+                        ->success()
+                        ->actions([
+                            Action::make('view')
+                                ->label(trans('filament-cms::messages.content.posts.import.github.notifications.view'))
+                                ->url($this->panel. '/posts/'.$post->id.'/edit')
+                                ->icon('heroicon-o-eye')
+                        ])
+                        ->sendToDatabase($user);
                 }
-                else {
-                    $post = new Post();
-                }
-
-                $post->title = [
-                    "ar" => $github['name'],
-                    "en" => $github['name']
-                ];
-                $post->body = [
-                    "ar" => $gitReadme,
-                    "en" => $gitReadme
-                ];
-                $post->short_description = [
-                    "ar" => $github['description'],
-                    "en" => $github['description']
-                ];
-                $post->slug = str($github['full_name'])->explode('/')->last();
-                $post->meta = $github;
-                $post->meta_url = $this->url;
-                $post->type = 'open-source';
-                $post->is_published = true;
-                $post->published_at = now();
-                $post->author_type = $this->userType;
-                $post->author_id = $this->userId;
-                $post->save();
-
-                $post->meta('github_starts', $github['stargazers_count']);
-                $post->meta('github_watchers', $github['watchers_count']);
-                $post->meta('github_language', $github['language']);
-                $post->meta('github_forks', $github['forks_count']);
-                $post->meta('github_open_issues', $github['open_issues_count']);
-                $post->meta('github_default_branch', $github['default_branch']);
-                $post->meta('github_docs', $github['homepage']);
-
-                $post->addMediaFromUrl($github['owner']['avatar_url'])->toMediaCollection('feature_image');
-
+            }
+            else {
                 Notification::make()
-                    ->title(trans('filament-cms::messages.content.posts.import.github.notifications.title'))
-                    ->body(trans('filament-cms::messages.content.posts.import.github.notifications.description', ['name'=> $github['full_name']]))
-                    ->success()
-                    ->actions([
-                        Action::make('view')
-                            ->label(trans('filament-cms::messages.content.posts.import.github.notifications.view'))
-                            ->url($this->panel. '/posts/'.$post->id.'/edit')
-                            ->icon('heroicon-o-eye')
-                    ])
+                    ->title(trans('filament-cms::messages.content.posts.import.github.notifications.failed_title'))
+                    ->body(trans('filament-cms::messages.content.posts.import.github.notifications.failed_description', ['name'=> $repo]))
+                    ->danger()
                     ->sendToDatabase($user);
             }
-        }
-        else {
-            Notification::make()
-                ->title(trans('filament-cms::messages.content.posts.import.github.notifications.failed_title'))
-                ->body(trans('filament-cms::messages.content.posts.import.github.notifications.failed_description', ['name'=> $repo]))
-                ->danger()
-                ->sendToDatabase($user);
+        }catch (\Exception $e) {
+            dd($e);
         }
 
     }
