@@ -42,7 +42,7 @@ class GitHubMetaGetterJob implements ShouldQueue
         if(isset($github['id'])){
             $gitReadme  = Http::get('https://raw.githubusercontent.com/'.$repo.'/'.$github['default_branch'].'/README.md')->body();
             if($gitReadme){
-                $checkIfPostExists = Post::query()->withTrashed()->where('slug', $github['full_name'])->first();
+                $checkIfPostExists = Post::query()->withTrashed()->where('slug', str($github['full_name'])->explode('/')->last())->first();
                 if($checkIfPostExists){
                     if($checkIfPostExists->deleted_at){
                         $checkIfPostExists->restore();
@@ -66,7 +66,7 @@ class GitHubMetaGetterJob implements ShouldQueue
                     "ar" => $github['description'],
                     "en" => $github['description']
                 ];
-                $post->slug = $github['full_name'];
+                $post->slug = str($github['full_name'])->explode('/')->last();
                 $post->meta = $github;
                 $post->meta_url = $this->url;
                 $post->type = 'open-source';
@@ -100,12 +100,12 @@ class GitHubMetaGetterJob implements ShouldQueue
             }
         }
         else {
-
+            Notification::make()
+                ->title(trans('filament-cms::messages.content.posts.import.github.notifications.failed_title'))
+                ->body(trans('filament-cms::messages.content.posts.import.github.notifications.failed_description', ['name'=> $repo]))
+                ->danger()
+                ->sendToDatabase($user);
         }
-        Notification::make()
-            ->title(trans('filament-cms::messages.content.posts.import.github.notifications.failed_title'))
-            ->body(trans('filament-cms::messages.content.posts.import.github.notifications.failed_description', ['name'=> $repo]))
-            ->danger()
-            ->sendToDatabase($user);
+
     }
 }

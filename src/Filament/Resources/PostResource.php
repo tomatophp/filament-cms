@@ -95,7 +95,11 @@ class PostResource extends Resource
                                         ->schema([
                                             Forms\Components\TextInput::make('title')
                                                 ->label(trans('filament-cms::messages.content.posts.sections.post.columns.title'))
-                                                ->afterStateUpdated( fn(Forms\Get $get, Forms\Set $set)=> $set('slug', Str::of($get('title'))->replace(' ', '-')->lower()->toString()))
+                                                ->afterStateUpdated( function(Forms\Get $get, Forms\Set $set){
+                                                    if($get('type') !== 'open-source'){
+                                                        $set('slug', Str::of($get('title'))->replace(' ', '-')->lower()->toString());
+                                                    }
+                                                })
                                                 ->lazy()
                                                 ->required(),
                                             Forms\Components\TextInput::make('slug')
