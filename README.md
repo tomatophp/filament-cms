@@ -24,7 +24,13 @@ php artisan filament-cms:install
 finally register the plugin on `/app/Providers/Filament/AdminPanelProvider.php`
 
 ```php
-->plugin(\TomatoPHP\FilamentCms\FilamentCMSPlugin::make())
+->plugin(
+    \TomatoPHP\FilamentCms\FilamentCMSPlugin::make()
+        ->useCategory()
+        ->usePost()
+        ->allowExport()
+        ->allowImport()
+)
 ```
 
 now please publish and migrate media table 
