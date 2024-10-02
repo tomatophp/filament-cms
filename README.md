@@ -313,6 +313,54 @@ use TomatoPHP\FilamentCms\Services\FilamentCMSFormBuilder;
 FilamentCMSFormBuilder::make('xvssd')->send($data)
 ```
 
+## Use Filament Shield
+
+you can use the shield to protect your resource and allow user roles by install it first
+
+```bash
+composer require bezhansalleh/filament-shield
+```
+
+Add the Spatie\Permission\Traits\HasRoles trait to your User model(s):
+
+```php
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Spatie\Permission\Traits\HasRoles;
+
+class User extends Authenticatable
+{
+    use HasRoles;
+
+    // ...
+}
+```
+Publish the config file then setup your configuration:
+
+```php
+->plugin(\BezhanSalleh\FilamentShield\FilamentShieldPlugin::make())
+```
+
+Now run the following command to install shield:
+
+```bash
+php artisan shield:install
+```
+
+Now we can [publish the package assets]([https://github.com/bezhanSalleh/filament-shield](https://github.com/tomatophp/filament-users?tab=readme-ov-file#publish-assets)).
+
+```bash
+php artisan vendor:publish --tag="filament-users-config"
+```
+
+now you need to allow it on the plugin options
+
+```php
+->plugin(\TomatoPHP\FilamentCms\FilamentCMSPlugin::make()->allowShield())
+```
+
+for more information check the [Filament Shield](https://github.com/bezhanSalleh/filament-shield)
+
+
 ## Publish Assets
 
 you can publish config file by use this command

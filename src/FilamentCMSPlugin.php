@@ -29,6 +29,7 @@ class FilamentCMSPlugin implements Plugin
     public static bool $useThemeManager = false;
     public static bool $usePageBuilder = false;
     public static bool $useFormBuilder = false;
+    public static bool $allowShield = false;
 //    public static bool $useTicketingSystem = false;
     public static array $defaultLocales = ['ar', 'en'];
 
@@ -86,6 +87,17 @@ class FilamentCMSPlugin implements Plugin
 
             $panel->plugin(SpatieLaravelTranslatablePlugin::make()->defaultLocales(self::$defaultLocales));
         }
+    }
+
+    public function allowShield(bool $allowShield = true): static
+    {
+        self::$allowShield = $allowShield;
+        return $this;
+    }
+
+    public function isShieldAllowed(): bool
+    {
+        return self::$allowShield;
     }
 
     public function useFormBuilder(bool $useFormBuilder = true): static

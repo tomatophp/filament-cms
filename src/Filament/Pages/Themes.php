@@ -12,12 +12,14 @@ use Filament\Tables\Table;
 use Illuminate\Support\Facades\File;
 use Filament\Pages\Actions\ButtonAction;
 use Nwidart\Modules\Facades\Module;
+use TomatoPHP\FilamentCms\Filament\Pages\Traits\HasShield;
 use TomatoPHP\FilamentCms\Models\Theme;
 use TomatoPHP\FilamentCms\Settings\ThemesSettings;
 
 class Themes extends Page implements HasTable
 {
     use InteractsWithTable;
+    use HasShield;
 
     protected static ?string $navigationIcon = 'heroicon-o-swatch';
 
