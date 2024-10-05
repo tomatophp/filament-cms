@@ -360,6 +360,15 @@ now you need to allow it on the plugin options
 
 for more information check the [Filament Shield](https://github.com/bezhanSalleh/filament-shield)
 
+## Use Post Events
+
+sometimes you need to add some custom logic to your post like send email or notify user you can use the post events to do this, and the supported events is:
+
+```php
+\TomatoPHP\FilamentCms\Events\PostCreated::class
+\TomatoPHP\FilamentCms\Events\PostUpdated::class
+\TomatoPHP\FilamentCms\Events\PostDeleted::class
+```
 
 ## Publish Assets
 
