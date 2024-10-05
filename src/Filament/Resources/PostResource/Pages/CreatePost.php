@@ -2,6 +2,8 @@
 
 namespace TomatoPHP\FilamentCms\Filament\Resources\PostResource\Pages;
 
+use Illuminate\Support\Facades\Event;
+use TomatoPHP\FilamentCms\Events\PostCreated;
 use TomatoPHP\FilamentCms\Filament\Resources\PostResource;
 use Filament\Actions;
 use Filament\Resources\Pages\CreateRecord;
@@ -20,5 +22,10 @@ class CreatePost extends CreateRecord
         return [
             Actions\LocaleSwitcher::make()
         ];
+    }
+
+    public function afterCreate()
+    {
+        Event::dispatch(new PostCreated($this->getRecord()->toArray()));
     }
 }

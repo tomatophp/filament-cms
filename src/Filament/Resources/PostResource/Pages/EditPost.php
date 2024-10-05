@@ -3,11 +3,16 @@
 namespace TomatoPHP\FilamentCms\Filament\Resources\PostResource\Pages;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Event;
+use TomatoPHP\FilamentCms\Events\PostCreated;
+use TomatoPHP\FilamentCms\Events\PostDeleted;
+use TomatoPHP\FilamentCms\Events\PostUpdated;
 use TomatoPHP\FilamentCms\Filament\Resources\PostResource;
 use Filament\Actions;
 use Filament\Resources\Pages\EditRecord;
 use TomatoPHP\FilamentCms\Jobs\GitHubMetaGetterJob;
 use TomatoPHP\FilamentCms\Jobs\YoutubeMetaGetterJob;
+use TomatoPHP\FilamentCms\Models\Post;
 
 class EditPost extends EditRecord
 {
@@ -19,7 +24,7 @@ class EditPost extends EditRecord
     {
         return [
             Actions\ViewAction::make(),
-            Actions\DeleteAction::make(),
+            Actions\DeleteAction::make()->before(fn(Post $record) => Event::dispatch(new PostDeleted($record->toArray()))),
             Actions\LocaleSwitcher::make()
         ];
     }
@@ -33,5 +38,11 @@ class EditPost extends EditRecord
         $data['downloads_monthly'] = $this->getRecord()->meta('downloads_monthly');
         $data['downloads_daily'] = $this->getRecord()->meta('downloads_daily');
         return $data;
+    }
+
+
+    public function afterSave()
+    {
+        Event::dispatch(new PostUpdated($this->getRecord()->toArray()));
     }
 }

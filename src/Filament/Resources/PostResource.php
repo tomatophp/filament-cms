@@ -4,6 +4,8 @@ namespace TomatoPHP\FilamentCms\Filament\Resources;
 
 use Filament\Infolists\Components\Grid;
 use Filament\Infolists\Components\ImageEntry;
+use Illuminate\Support\Facades\Event;
+use TomatoPHP\FilamentCms\Events\PostDeleted;
 use TomatoPHP\FilamentCms\Infolists\Components\MarkdownEntry;
 use App\Models\User;
 use Filament\Infolists\Components\Section;
@@ -518,9 +520,11 @@ class PostResource extends Resource
                     ->iconButton()
                     ->tooltip(__('filament-actions::edit.single.label')),
                 Tables\Actions\DeleteAction::make()
+                    ->before(fn(Post $record) => Event::dispatch(new PostDeleted($record->toArray())))
                     ->iconButton()
                     ->tooltip(__('filament-actions::delete.single.label')),
                 Tables\Actions\ForceDeleteAction::make()
+                    ->before(fn(Post $record) => Event::dispatch(new PostDeleted($record->toArray())))
                     ->iconButton()
                     ->tooltip(__('filament-actions::force-delete.single.label')),
                 Tables\Actions\RestoreAction::make()
