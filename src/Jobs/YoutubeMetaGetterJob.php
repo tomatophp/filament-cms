@@ -9,8 +9,10 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
+use TomatoPHP\FilamentCms\Events\PostCreated;
 use TomatoPHP\FilamentCms\Models\Post;
 
 class YoutubeMetaGetterJob implements ShouldQueue
@@ -82,6 +84,8 @@ class YoutubeMetaGetterJob implements ShouldQueue
                 $post->meta('youtube_comments', $youtube['items'][0]['statistics']['commentCount']);
 
                 $post->addMediaFromUrl($youtube['items'][0]['snippet']['thumbnails']['maxres']['url'])->toMediaCollection('feature_image');
+
+                Event::dispatch(new PostCreated($post->toArray()));
 
                 Notification::make()
                     ->title(trans('filament-cms::messages.content.posts.import.youtube.notifications.title'))

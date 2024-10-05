@@ -5,14 +5,12 @@ namespace TomatoPHP\FilamentCms\Filament\Resources\PostResource\Pages;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Event;
 use TomatoPHP\FilamentCms\Events\PostCreated;
-use TomatoPHP\FilamentCms\Events\PostDeleted;
 use TomatoPHP\FilamentCms\Events\PostUpdated;
 use TomatoPHP\FilamentCms\Filament\Resources\PostResource;
 use Filament\Actions;
 use Filament\Resources\Pages\EditRecord;
 use TomatoPHP\FilamentCms\Jobs\GitHubMetaGetterJob;
 use TomatoPHP\FilamentCms\Jobs\YoutubeMetaGetterJob;
-use TomatoPHP\FilamentCms\Models\Post;
 
 class EditPost extends EditRecord
 {
@@ -24,7 +22,7 @@ class EditPost extends EditRecord
     {
         return [
             Actions\ViewAction::make(),
-            Actions\DeleteAction::make()->before(fn(Post $record) => Event::dispatch(new PostDeleted($record->toArray()))),
+            Actions\DeleteAction::make(),
             Actions\LocaleSwitcher::make()
         ];
     }

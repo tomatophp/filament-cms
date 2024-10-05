@@ -4,12 +4,14 @@ namespace TomatoPHP\FilamentCms\Services;
 
 use Filament\Notifications\Actions\Action;
 use Filament\Notifications\Notification;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Str;
 use TomatoPHP\FilamentCms\Browser\Actions\CreateBrowser;
 use TomatoPHP\FilamentCms\Browser\Chrome;
 use Facebook\WebDriver\WebDriverBy;
 use Illuminate\Support\Facades\Log;
 use Laravel\Dusk\Browser;
+use TomatoPHP\FilamentCms\Events\PostCreated;
 use TomatoPHP\FilamentCms\Models\Portfolio;
 use TomatoPHP\FilamentCms\Models\Post;
 
@@ -252,6 +254,9 @@ class Behance
             foreach($project['images'] as $image){
                 $post->addMediaFromUrl($image)->toMediaCollection('images');
             }
+
+            Event::dispatch(new PostCreated($post->toArray()));
+
 
             $browser->pause(2000);
         }catch (\Exception $e){

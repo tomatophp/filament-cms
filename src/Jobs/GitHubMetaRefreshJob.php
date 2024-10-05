@@ -8,8 +8,11 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
+use TomatoPHP\FilamentCms\Events\PostCreated;
+use TomatoPHP\FilamentCms\Events\PostUpdated;
 use TomatoPHP\FilamentCms\Models\Post;
 
 class GitHubMetaRefreshJob implements ShouldQueue
@@ -60,6 +63,9 @@ class GitHubMetaRefreshJob implements ShouldQueue
                     $post->meta('github_open_issues', $github['open_issues_count']);
                     $post->meta('github_default_branch', $github['default_branch']);
                     $post->meta('github_docs', $github['homepage']);
+
+
+                    Event::dispatch(new PostUpdated($post->toArray()));
                 }
             }
         }

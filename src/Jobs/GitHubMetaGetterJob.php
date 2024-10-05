@@ -9,8 +9,11 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
+use TomatoPHP\FilamentCms\Events\PostCreated;
+use TomatoPHP\FilamentCms\Events\PostUpdated;
 use TomatoPHP\FilamentCms\Models\Post;
 
 class GitHubMetaGetterJob implements ShouldQueue
@@ -99,6 +102,9 @@ class GitHubMetaGetterJob implements ShouldQueue
                     $post->meta('github_docs', $github['homepage']);
 
                     $post->addMediaFromUrl($github['owner']['avatar_url'])->toMediaCollection('feature_image');
+
+
+                    Event::dispatch(new PostCreated($this->getRecord()->toArray()));
 
                     Notification::make()
                         ->title(trans('filament-cms::messages.content.posts.import.github.notifications.title'))
