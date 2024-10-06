@@ -537,6 +537,26 @@ class PostResource extends Resource
                     Tables\Actions\DeleteBulkAction::make(),
                     Tables\Actions\ForceDeleteBulkAction::make(),
                     Tables\Actions\RestoreBulkAction::make(),
+                    Tables\Actions\BulkAction::make('category')
+                        ->label(trans('filament-cms::messages.content.posts.sections.status.columns.categories'))
+                        ->icon('heroicon-o-rectangle-stack')
+                        ->form([
+                            Forms\Components\Select::make('categories')
+                                ->label(trans('filament-cms::messages.content.posts.sections.status.columns.categories'))
+                                ->searchable()
+                                ->multiple()
+                                ->options(Category::query()->where('for', "post")->where('type', 'category')->pluck('name', 'id')->toArray()),
+                        ])
+                        ->action(function(Collection $records, array $data){
+                            $records->each(fn($record) => $record->categories()->sync($data['categories']));
+
+                            Notification::make()
+                                ->title('Success')
+                                ->body('Posts categories has been changed')
+                                ->success()
+                                ->send();
+                        })
+                        ->deselectRecordsAfterCompletion(),
                     Tables\Actions\BulkAction::make('publish')
                         ->requiresConfirmation()
                         ->label(trans('filament-cms::messages.content.posts.sections.status.columns.is_published'))
