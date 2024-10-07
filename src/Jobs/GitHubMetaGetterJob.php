@@ -104,7 +104,7 @@ class GitHubMetaGetterJob implements ShouldQueue
                     $post->addMediaFromUrl($github['owner']['avatar_url'])->toMediaCollection('feature_image');
 
 
-                    Event::dispatch(new PostCreated($this->getRecord()->toArray()));
+                    Event::dispatch(new PostCreated($post->toArray()));
 
                     Notification::make()
                         ->title(trans('filament-cms::messages.content.posts.import.github.notifications.title'))
