@@ -13,15 +13,6 @@ class ListCategories extends ListRecords
     protected static string $resource = CategoryResource::class;
 
 
-    #[Reactive]
-    public ?string $activeLocale = null;
-
-    public static function getTranslatableLocales(): array
-    {
-        return ['en', 'ar'];
-    }
-
-
     protected function getHeaderActions(): array
     {
         return [
