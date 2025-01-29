@@ -28,7 +28,7 @@ return new class extends Migration
 
                 //Add User For Tickets
                 $table->string('subject');
-                $table->string('code')->unique()->index();
+                $table->string('code')->unique();
 
                 $table->longText('message')->nullable();
 

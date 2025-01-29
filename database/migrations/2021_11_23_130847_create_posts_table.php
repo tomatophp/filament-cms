@@ -25,7 +25,7 @@ return new class extends Migration
 
                 //Info
                 $table->json('title');
-                $table->string('slug')->unique()->index();
+                $table->string('slug')->unique();
 
                 $table->json('short_description')->nullable();
                 $table->json('keywords')->nullable();
