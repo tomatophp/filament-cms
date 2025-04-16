@@ -21,7 +21,7 @@ return new class extends Migration
                 $table->string('for')->default('posts')->nullable();
                 $table->string('type')->default('category')->nullable();
                 $table->json('name');
-                $table->string('slug')->unique()->index();
+                $table->string('slug')->unique();
                 $table->json('description')->nullable();
                 $table->string('icon')->nullable();
                 $table->string('color')->nullable();
