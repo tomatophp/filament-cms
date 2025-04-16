@@ -37,6 +37,7 @@
             "email": "info@3x1.io"
         }
     ],
+    "minimum-stability": "stable",
     "require": {
         "php": "^8.1|^8.2",
         "tomatophp/console-helpers": "^1.1",
