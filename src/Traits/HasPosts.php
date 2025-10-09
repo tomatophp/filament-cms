@@ -2,8 +2,6 @@
 
 namespace TomatoPHP\FilamentCms\Traits;
 
-use TomatoPHP\FilamentCms\Services\FilamentPostAuthors;
-
 trait HasPosts
 {
     public function posts()

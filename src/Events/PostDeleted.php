@@ -11,13 +11,15 @@ use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 
-class PostDeleted implements ShouldBroadcast , ShouldQueue
+class PostDeleted implements ShouldBroadcast, ShouldQueue
 {
-    use Dispatchable, InteractsWithSockets, SerializesModels, Queueable, InteractsWithQueue;
+    use Dispatchable;
+    use InteractsWithQueue;
+    use InteractsWithSockets;
+    use Queueable;
+    use SerializesModels;
 
-    public function __construct(public array $data)
-    {
-    }
+    public function __construct(public array $data) {}
 
     /**
      * Get the channels the event should broadcast on.
@@ -30,5 +32,4 @@ class PostDeleted implements ShouldBroadcast , ShouldQueue
             new Channel('cms'),
         ];
     }
-
 }

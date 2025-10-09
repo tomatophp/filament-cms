@@ -13,12 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        if(config('filament-cms.features.posts') && config('filament-cms.features.category')) {
-            Schema::create('posts_has_tags', function (Blueprint $table) {
-                $table->foreignId('post_id')->constrained('posts')->onDelete('cascade');
-                $table->foreignId('tag_id')->constrained('categories')->onDelete('cascade');
-            });
-        }
+        Schema::create('posts_has_tags', function (Blueprint $table) {
+            $table->foreignId('post_id')->constrained('posts')->onDelete('cascade');
+            $table->foreignId('tag_id')->constrained('categories')->onDelete('cascade');
+        });
     }
 
     /**

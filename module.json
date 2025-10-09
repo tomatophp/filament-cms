@@ -3,9 +3,9 @@
     "alias": "filament-cms",
     "description": {
         "ar": "قم بإدارة المحتوي الخاص بك من خلال بناء الصفحات والثيمات المختلفة",
-        "en": "Full CMS System with easy to use page builder & theme manager for FilamentPHP",
-        "gr": "Full CMS System with easy to use page builder & theme manager for FilamentPHP",
-        "sp": "Full CMS System with easy to use page builder & theme manager for FilamentPHP"
+        "en": "Full CMS System with support of importing integrations and multi meta functions",
+        "gr": "Full CMS System with support of importing integrations and multi meta functions",
+        "sp": "Full CMS System with support of importing integrations and multi meta functions"
     },
     "keywords": [],
     "priority": 0,
@@ -21,9 +21,9 @@
     },
     "color": "#8911d9",
     "icon": "heroicon-c-pencil",
-    "placeholder": "https://raw.githubusercontent.com/tomatophp/filament-cms/master/arts/3x1io-tomato-cms.jpg",
+    "placeholder": "https://raw.githubusercontent.com/tomatophp/filament-cms/master/arts/fadymondy-tomato-cms.jpg",
     "type": "plugin",
-    "version": "v1.0.19",
+    "version": "v4.0.0",
     "github" : "https://github.com/tomatophp/filament-cms",
     "docs" : "https://github.com/tomatophp/filament-cms"
 }

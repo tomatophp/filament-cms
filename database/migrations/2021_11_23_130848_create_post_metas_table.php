@@ -11,21 +11,19 @@ return new class extends Migration
      */
     public function up(): void
     {
-        if(config('filament-cms.features.posts')) {
-            Schema::create('post_metas', function (Blueprint $table) {
-                $table->id();
+        Schema::create('post_metas', function (Blueprint $table) {
+            $table->id();
 
-                $table->unsignedBigInteger('model_id')->nullable();
-                $table->string('model_type')->nullable();
+            $table->unsignedBigInteger('model_id')->nullable();
+            $table->string('model_type')->nullable();
 
-                $table->foreignId('post_id')->references('id')->on('posts')->onDelete('cascade');
+            $table->foreignId('post_id')->references('id')->on('posts')->onDelete('cascade');
 
-                $table->string('key')->index();
-                $table->json('value')->nullable();
+            $table->string('key')->index();
+            $table->json('value')->nullable();
 
-                $table->timestamps();
-            });
-        }
+            $table->timestamps();
+        });
     }
 
     /**

@@ -2,22 +2,18 @@
 
 namespace TomatoPHP\FilamentCms\Filament\Resources\CategoryResource\Pages;
 
-use TomatoPHP\FilamentCms\Filament\Resources\CategoryResource;
 use Filament\Actions;
 use Filament\Resources\Pages\EditRecord;
+use TomatoPHP\FilamentCms\Facades\FilamentCMS;
+use TomatoPHP\FilamentCms\Filament\Resources\CategoryResource;
 
 class EditCategory extends EditRecord
 {
-    use EditRecord\Concerns\Translatable;
 
     protected static string $resource = CategoryResource::class;
 
-
     protected function getHeaderActions(): array
     {
-        return [
-            Actions\DeleteAction::make(),
-            Actions\LocaleSwitcher::make()
-        ];
+        return FilamentCMS::getCategoryActions(self::class);
     }
 }

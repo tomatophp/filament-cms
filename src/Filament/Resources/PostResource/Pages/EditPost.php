@@ -2,29 +2,29 @@
 
 namespace TomatoPHP\FilamentCms\Filament\Resources\PostResource\Pages;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Event;
-use TomatoPHP\FilamentCms\Events\PostCreated;
-use TomatoPHP\FilamentCms\Events\PostUpdated;
-use TomatoPHP\FilamentCms\Filament\Resources\PostResource;
 use Filament\Actions;
 use Filament\Resources\Pages\EditRecord;
-use TomatoPHP\FilamentCms\Jobs\GitHubMetaGetterJob;
-use TomatoPHP\FilamentCms\Jobs\YoutubeMetaGetterJob;
+use Illuminate\Support\Facades\Event;
+use TomatoPHP\FilamentCms\Events\PostUpdated;
+use TomatoPHP\FilamentCms\Facades\FilamentCMS;
+use TomatoPHP\FilamentCms\Filament\Resources\PostResource;
+use LaraZeus\SpatieTranslatable\Resources\Pages\EditRecord\Concerns\Translatable;
+use LaraZeus\SpatieTranslatable\Actions\LocaleSwitcher;
 
 class EditPost extends EditRecord
 {
-    use EditRecord\Concerns\Translatable;
+    use Translatable;
 
     protected static string $resource = PostResource::class;
 
     protected function getHeaderActions(): array
     {
-        return [
-            Actions\ViewAction::make(),
-            Actions\DeleteAction::make(),
-            Actions\LocaleSwitcher::make()
-        ];
+        return array_merge(
+            FilamentCMS::getPostActions(self::class),
+            [
+                LocaleSwitcher::make(),
+            ]
+        );
     }
 
     protected function mutateFormDataBeforeFill(array $data): array
@@ -35,9 +35,9 @@ class EditPost extends EditRecord
         $data['downloads_total'] = $this->getRecord()->meta('downloads_total');
         $data['downloads_monthly'] = $this->getRecord()->meta('downloads_monthly');
         $data['downloads_daily'] = $this->getRecord()->meta('downloads_daily');
+
         return $data;
     }
-
 
     public function afterSave()
     {

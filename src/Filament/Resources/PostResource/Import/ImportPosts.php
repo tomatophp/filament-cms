@@ -2,8 +2,8 @@
 
 namespace TomatoPHP\FilamentCms\Filament\Resources\PostResource\Import;
 
-use Filament\Actions\Imports\Importer;
 use Filament\Actions\Imports\ImportColumn;
+use Filament\Actions\Imports\Importer;
 use Filament\Actions\Imports\Models\Import;
 use TomatoPHP\FilamentCms\Models\Post;
 
@@ -39,7 +39,7 @@ class ImportPosts extends Importer
             'short_description' => $this->data['short_description'],
             'slug' => $this->data['slug'],
             'type' => $this->data['type'],
-            'body' => $this->data['body']
+            'body' => $this->data['body'],
         ]);
     }
 

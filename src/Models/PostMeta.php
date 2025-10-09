@@ -5,9 +5,9 @@ namespace TomatoPHP\FilamentCms\Models;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * @property integer $id
- * @property integer $account_id
- * @property integer $model_id
+ * @property int $id
+ * @property int $account_id
+ * @property int $model_id
  * @property string $model_type
  * @property string $key
  * @property mixed $value
@@ -25,6 +25,7 @@ class PostMeta extends Model
     protected $casts = [
         'value' => 'json',
     ];
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */

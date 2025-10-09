@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        if(Schema::hasTable('teams')){
+        if (Schema::hasTable('teams')) {
             Schema::table('categories', function (Blueprint $table) {
                 $table->unsignedBigInteger('team_id')->nullable()->after('id');
                 $table->foreign('team_id')->references('id')->on('teams')->onDelete('cascade');
@@ -25,7 +25,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        if(Schema::hasTable('teams')) {
+        if (Schema::hasTable('teams')) {
             Schema::table('categories', function (Blueprint $table) {
                 $table->dropForeign(['team_id']);
                 $table->dropColumn('team_id');

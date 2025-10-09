@@ -3,6 +3,7 @@
 namespace TomatoPHP\FilamentCms\Models;
 
 use App\Models\Team;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\MediaLibrary\HasMedia;
@@ -11,8 +12,8 @@ use Spatie\Translatable\HasTranslations;
 use TomatoPHP\FilamentEcommerce\Models\Product;
 
 /**
- * @property integer $id
- * @property integer $parent_id
+ * @property int $id
+ * @property int $parent_id
  * @property string $for
  * @property string $type
  * @property string $name
@@ -20,8 +21,8 @@ use TomatoPHP\FilamentEcommerce\Models\Product;
  * @property string $description
  * @property string $icon
  * @property string $color
- * @property boolean $is_active
- * @property boolean $show_in_menu
+ * @property bool $is_active
+ * @property bool $show_in_menu
  * @property string $created_at
  * @property string $updated_at
  * @property Categorable[] $categorables
@@ -31,13 +32,19 @@ use TomatoPHP\FilamentEcommerce\Models\Product;
  */
 class Category extends Model implements HasMedia
 {
-    use InteractsWithMedia;
+    use HasFactory;
     use HasTranslations;
+    use InteractsWithMedia;
     use SoftDeletes;
+
+    protected static function newFactory()
+    {
+        return \TomatoPHP\FilamentCms\Tests\Database\Factories\CategoryFactory::new();
+    }
 
     public $translatable = [
         'name',
-        'description'
+        'description',
     ];
 
     /**
@@ -55,9 +62,8 @@ class Category extends Model implements HasMedia
         'is_active',
         'show_in_menu',
         'created_at',
-        'updated_at'
+        'updated_at',
     ];
-
 
     protected $casts = [
         'is_active' => 'boolean',

@@ -1,7 +1,7 @@
 {
     "name": "tomatophp/filament-cms",
     "type": "library",
-    "description": "Full CMS System with easy to use page builder & theme manager for FilamentPHP",
+    "description": "Full CMS System with support of importing integrations and multi meta functions",
     "keywords": [
         "php",
         "laravel",
@@ -21,7 +21,8 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Tests\\": "tests/"
+            "TomatoPHP\\FilamentCms\\Tests\\": "tests/src/",
+            "TomatoPHP\\FilamentCms\\Tests\\Database\\Factories\\": "tests/database/factories"
         }
     },
     "extra": {
@@ -31,21 +32,49 @@
             ]
         }
     },
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true,
+            "phpstan/extension-installer": true
+        }
+    },
+    "scripts": {
+        "testbench": "vendor/bin/testbench package:discover --ansi",
+        "analyse": "vendor/bin/phpstan analyse src tests",
+        "test": "vendor/bin/pest",
+        "test-coverage": "vendor/bin/pest --coverage",
+        "format": "vendor/bin/pint",
+        "db": "vendor/bin/testbench package:create-sqlite-db && vendor/bin/testbench migrate"
+    },
     "authors": [
         {
             "name": "Fady Mondy",
             "email": "info@3x1.io"
         }
     ],
-    "minimum-stability": "stable",
     "require": {
-        "php": "^8.1|^8.2",
+        "php": "^8.2|^8.3|^8.4",
         "tomatophp/console-helpers": "^1.1",
-        "filament/filament": "^3.0.0",
-        "tomatophp/filament-icons": "^1.0",
-        "tomatophp/filament-translation-component": "^1.0",
-        "filament/spatie-laravel-translatable-plugin": "^3.0.0",
-        "filament/spatie-laravel-media-library-plugin": "^3.0.0",
-        "filament/spatie-laravel-settings-plugin": "^3.0.0"
-    }
+        "filament/filament": "^4.0",
+        "tomatophp/filament-icons": "^4.0",
+        "tomatophp/filament-translation-component": "^4.0",
+        "filament/spatie-laravel-media-library-plugin": "^4.0",
+        "lara-zeus/spatie-translatable": "^1.0"
+    },
+    "require-dev": {
+        "larastan/larastan": "^2.9||^3.0",
+        "laravel/pint": "^1.14",
+        "nunomaduro/collision": "^8.1.1||^7.10.0",
+        "orchestra/testbench": "^10.0.0||^9.0.0",
+        "pestphp/pest": "^3.0",
+        "pestphp/pest-plugin-arch": "^3.0",
+        "pestphp/pest-plugin-laravel": "^3.0",
+        "pestphp/pest-plugin-livewire": "^3.0",
+        "pestphp/pest-plugin-type-coverage": "^3.5",
+        "phpstan/extension-installer": "^1.3||^2.0",
+        "phpstan/phpstan-deprecation-rules": "^1.1||^2.0",
+        "phpstan/phpstan-phpunit": "^1.3||^2.0"
+    },
+    "version": "4.0.0"
 }

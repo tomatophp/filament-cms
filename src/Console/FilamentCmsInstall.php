@@ -28,7 +28,6 @@ class FilamentCmsInstall extends Command
         parent::__construct();
     }
 
-
     /**
      * Execute the console command.
      *
@@ -38,8 +37,8 @@ class FilamentCmsInstall extends Command
     {
         $this->info('Publish Vendor Assets');
         $this->artisanCommand(['vendor:publish --tag="medialibrary-migrations"']);
-        $this->artisanCommand(["migrate"]);
-        $this->artisanCommand(["optimize:clear"]);
+        $this->artisanCommand(['migrate']);
+        $this->artisanCommand(['optimize:clear']);
         $this->info('Filament CMS installed successfully.');
     }
 }

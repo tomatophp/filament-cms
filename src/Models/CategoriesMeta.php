@@ -5,9 +5,9 @@ namespace TomatoPHP\FilamentCms\Models;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * @property integer $id
- * @property integer $category_id
- * @property integer $model_id
+ * @property int $id
+ * @property int $category_id
+ * @property int $model_id
  * @property string $model_type
  * @property string $key
  * @property mixed $value
