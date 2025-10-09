@@ -28,20 +28,16 @@ jobs:
       matrix:
         os: [ubuntu-latest]
         php: [8.3, 8.2]
-        laravel: [11.*, 10.*]
+        laravel: [11.*]
         stability: [prefer-stable]
         include:
           - laravel: 11.*
             testbench: 9.*
             carbon: 3.*
             collision: 8.*
-          - laravel: 10.*
-            testbench: 8.*
-            carbon: 2.*
-            collision: 7.*
         exclude:
           - laravel: 11.*
-            php: 8.2
+            php: 8.1
     name: P${{ matrix.php }} - L${{ matrix.laravel }} - ${{ matrix.stability }} - ${{ matrix.os }}
     steps:
       - name: Checkout Code
@@ -69,6 +65,7 @@ jobs:
         run: |
           composer require "laravel/framework:${{ matrix.laravel }}" "orchestra/testbench:${{ matrix.testbench }}" "nesbot/carbon:${{ matrix.carbon }}" "nunomaduro/collision:${{ matrix.collision }}" --no-interaction --no-update
           composer update --${{ matrix.stability }} --prefer-dist --no-interaction
+          composer db
 
       - name: Execute tests
-        run: vendor/bin/pest --parallel
+        run: vendor/bin/pest
