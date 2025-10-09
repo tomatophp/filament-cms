@@ -5,6 +5,9 @@
 [![Latest Stable Version](https://poser.pugx.org/tomatophp/filament-cms/version.svg)](https://packagist.org/packages/tomatophp/filament-cms)
 [![License](https://poser.pugx.org/tomatophp/filament-cms/license.svg)](https://packagist.org/packages/tomatophp/filament-cms)
 [![Downloads](https://poser.pugx.org/tomatophp/filament-cms/d/total.svg)](https://packagist.org/packages/tomatophp/filament-cms)
+[![Dependabot Updates](https://github.com/tomatophp/filament-cms/actions/workflows/dependabot/dependabot-updates/badge.svg)](https://github.com/tomatophp/filament-cms/actions/workflows/dependabot/dependabot-updates)
+[![PHP Code Styling](https://github.com/tomatophp/filament-cms/actions/workflows/fix-php-code-styling.yml/badge.svg)](https://github.com/tomatophp/filament-cms/actions/workflows/fix-php-code-styling.yml)
+
 
 Full CMS System with support of importing integrations and multi meta functions
 
