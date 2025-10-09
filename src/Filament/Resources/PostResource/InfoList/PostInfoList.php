@@ -26,7 +26,7 @@ class PostInfoList
         return array_merge(self::getDefaultSchema(), self::$schema);
     }
 
-    public static function register(\Filament\Schemas\Components\Component|array $component): void
+    public static function register(\Filament\Schemas\Components\Component | array $component): void
     {
         if (is_array($component)) {
             foreach ($component as $item) {

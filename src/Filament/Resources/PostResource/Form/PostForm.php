@@ -14,11 +14,11 @@ class PostForm
     {
         return $form->schema([
             Grid::make([
-                "sm" => 1,
-                "md" => 6,
-                "lg" => 12
+                'sm' => 1,
+                'md' => 6,
+                'lg' => 12,
             ])
-                ->schema(self::getSchema())
+                ->schema(self::getSchema()),
         ])->columns(1);
     }
 

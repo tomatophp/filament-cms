@@ -42,7 +42,6 @@ class FilamentCMSPlugin implements Plugin
 
     }
 
-
     public function defaultLocales(array $defaultLocales): static
     {
         self::$defaultLocales = $defaultLocales;
@@ -96,7 +95,7 @@ class FilamentCMSPlugin implements Plugin
         FilamentCMS::registerCategoryAction(CategoryResource\Actions\CreateAction::make());
         FilamentCMS::registerCategoryAction(CategoryResource\Actions\DeleteAction::make(), CategoryResource\Pages\EditCategory::class);
 
-        if(self::$allowContentImport){
+        if (self::$allowContentImport) {
             FilamentCMS::registerPostAction(PostResource\Actions\ImportActionGroup::make());
         }
     }
