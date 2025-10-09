@@ -27,6 +27,7 @@ class DetailsSection extends Component
                 ->lazy()
                 ->required(),
             Forms\Components\TextInput::make('slug')
+                ->unique()
                 ->label(trans('filament-cms::messages.content.posts.sections.post.columns.slug'))
                 ->required()
                 ->maxLength(255),

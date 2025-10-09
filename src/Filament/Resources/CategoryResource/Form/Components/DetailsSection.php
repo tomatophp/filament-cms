@@ -25,6 +25,7 @@ class DetailsSection extends Component
                     ->columnSpanFull()
                     ->required(),
                 Forms\Components\TextInput::make('slug')
+                    ->unique()
                     ->label(trans('filament-cms::messages.content.category.sections.details.columns.slug'))
                     ->required()
                     ->columnSpanFull()
