@@ -17,11 +17,12 @@ class PostResource extends Resource
 
     protected static ?string $model = Post::class;
 
-    protected static BackedEnum|string|null $navigationIcon = 'heroicon-o-pencil';
+    protected static BackedEnum | string | null $navigationIcon = 'heroicon-o-pencil';
 
     public static function getTranslatableLocales(): array
     {
         $plugin = filament('filament-cms');
+
         return $plugin::$defaultLocales;
     }
 

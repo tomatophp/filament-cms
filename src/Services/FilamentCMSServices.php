@@ -10,9 +10,13 @@ use TomatoPHP\FilamentCms\Filament\Resources\PostResource\Pages\ListPosts;
 class FilamentCMSServices
 {
     private array $postActions = [];
+
     private array $importActions = [];
+
     private array $categoryActions = [];
+
     private array $postRelations = [];
+
     private array $categoryRelations = [];
 
     public function registerImportAction(array | Action | ActionGroup $action): void
@@ -82,7 +86,6 @@ class FilamentCMSServices
     {
         return $this->postRelations;
     }
-
 
     public function registerCategoryRelation(array | string $relation): void
     {

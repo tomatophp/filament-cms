@@ -13,9 +13,9 @@ class DetailsSection extends Component
     public static function make(): \Filament\Schemas\Components\Component
     {
         return \Filament\Schemas\Components\Grid::make([
-            "sm" => 1,
-            "md" => 2,
-            "lg" => 2
+            'sm' => 1,
+            'md' => 2,
+            'lg' => 2,
         ])->schema([
             Forms\Components\TextInput::make('title')
                 ->label(trans('filament-cms::messages.content.posts.sections.post.columns.title'))

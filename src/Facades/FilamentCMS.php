@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\Facade;
 use TomatoPHP\FilamentCms\Filament\Resources\CategoryResource\Pages\ListCategories;
 use TomatoPHP\FilamentCms\Filament\Resources\PostResource\Pages\ListPosts;
 use TomatoPHP\FilamentCms\Services\FilamentCMSAuthors;
-use TomatoPHP\FilamentCms\Services\FilamentCMSThemes;
 use TomatoPHP\FilamentCms\Services\FilamentCMSTypes;
 
 /**

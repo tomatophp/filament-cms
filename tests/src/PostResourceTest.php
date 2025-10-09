@@ -3,7 +3,6 @@
 namespace TomatoPHP\FilamentCms\Tests;
 
 use Filament\Facades\Filament;
-use Illuminate\Config\Repository;
 use TomatoPHP\FilamentCms\Filament\Resources\PostResource;
 use TomatoPHP\FilamentCms\Filament\Resources\PostResource\Pages;
 use TomatoPHP\FilamentCms\FilamentCMSPlugin;
@@ -78,18 +77,18 @@ it('can create new post', function () {
             'keywords' => $newData->keywords,
             'is_published' => true,
             'is_trend' => false,
-            'published_at' => now()->format('Y-m-d H:i:s')
+            'published_at' => now()->format('Y-m-d H:i:s'),
         ])
         ->call('create')
         ->assertHasNoFormErrors();
 
     assertDatabaseHas(Post::class, [
         'title' => json_encode([
-            "en" => $newData->title,
-            "ar" => $newData->title,
+            'en' => $newData->title,
+            'ar' => $newData->title,
         ]),
         'slug' => $newData->slug,
-        'type' => 'post'
+        'type' => 'post',
     ]);
 });
 

@@ -27,11 +27,11 @@ return [
                 'class' => \TomatoPHP\FilamentCms\Filament\Resources\CategoryResource\Table\CategoryTable::class,
                 'filters' => \TomatoPHP\FilamentCms\Filament\Resources\CategoryResource\Table\CategoryFilters::class,
                 'actions' => \TomatoPHP\FilamentCms\Filament\Resources\CategoryResource\Table\CategoryActions::class,
-                'bulkActions' => \TomatoPHP\FilamentCms\Filament\Resources\CategoryResource\Table\CategoryBulkActions::class
+                'bulkActions' => \TomatoPHP\FilamentCms\Filament\Resources\CategoryResource\Table\CategoryBulkActions::class,
             ],
             'form' => [
                 'class' => \TomatoPHP\FilamentCms\Filament\Resources\CategoryResource\Form\CategoryForm::class,
-            ]
-        ]
+            ],
+        ],
     ],
 ];
