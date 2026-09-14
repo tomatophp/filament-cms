@@ -12,7 +12,7 @@ class TypeFilter
     public static function make(): Filter
     {
         return Filter::make('type')
-            ->form([
+            ->schema([
                 Forms\Components\Select::make('type')
                     ->options(FilamentCMSTypes::getOptions()->pluck('label', 'key')->toArray())
                     ->label('Type')

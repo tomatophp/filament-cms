@@ -11,10 +11,20 @@
 
 Full CMS System with support of importing integrations and multi meta functions
 
+## Requirements
+
+| Package version | Filament | Laravel     | PHP  |
+|-----------------|----------|-------------|------|
+| 5.x             | 5.x      | 12.x, 13.x  | 8.2+ |
+| 4.x             | 4.x      | 11.x, 12.x  | 8.2+ |
+
 ## Installation
 
 > [!CAUTION]
-> Don't update to v4.0 if you are using v1.0 or less because you will lose some features but you can update and use this features from integrated packages.
+> Don't update to v4.0 or later if you are using v1.0 or less because you will lose some features but you can update and use this features from integrated packages.
+
+> [!NOTE]
+> The package creates `categories`, `posts` and related tables. If your app already has a `categories` table or a Filament resource on `/admin/categories`, rename yours before installing.
 
 
 ```bash
@@ -27,9 +37,13 @@ after installing your package, please run this command
 php artisan filament-cms:install
 ```
 
-finally register the plugin on `/app/Providers/Filament/AdminPanelProvider.php`
+finally register the plugins on `/app/Providers/Filament/AdminPanelProvider.php`. The post resource is translatable, so it needs the `lara-zeus/spatie-translatable` plugin next to it.
 
 ```php
+->plugin(
+    \LaraZeus\SpatieTranslatable\SpatieTranslatablePlugin::make()
+        ->defaultLocales(['en', 'ar'])
+)
 ->plugin(
     \TomatoPHP\FilamentCms\FilamentCMSPlugin::make()
         ->useCategory()
@@ -42,11 +56,15 @@ finally register the plugin on `/app/Providers/Filament/AdminPanelProvider.php`
 ## Screenshots
 
 ![Posts List](https://raw.githubusercontent.com/tomatophp/filament-cms/master/arts/posts-list.png)
+![Posts List Dark](https://raw.githubusercontent.com/tomatophp/filament-cms/master/arts/posts-list-dark.png)
 ![Posts Create](https://raw.githubusercontent.com/tomatophp/filament-cms/master/arts/create-post.png)
-![Posts SEO](https://raw.githubusercontent.com/tomatophp/filament-cms/master/arts/post-seo.png)
+![Posts Create Dark](https://raw.githubusercontent.com/tomatophp/filament-cms/master/arts/create-post-dark.png)
 ![Posts View](https://raw.githubusercontent.com/tomatophp/filament-cms/master/arts/view-post.png)
+![Posts View Dark](https://raw.githubusercontent.com/tomatophp/filament-cms/master/arts/view-post-dark.png)
 ![Category List](https://raw.githubusercontent.com/tomatophp/filament-cms/master/arts/category-list.png)
+![Category List Dark](https://raw.githubusercontent.com/tomatophp/filament-cms/master/arts/category-list-dark.png)
 ![Category Create](https://raw.githubusercontent.com/tomatophp/filament-cms/master/arts/create-category.png)
+![Category Create Dark](https://raw.githubusercontent.com/tomatophp/filament-cms/master/arts/create-category-dark.png)
 
 ## Features
 

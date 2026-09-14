@@ -3,6 +3,7 @@
 namespace TomatoPHP\FilamentCms\Filament\Resources\PostResource\Table;
 
 use Filament\Actions;
+use Filament\Actions\Action;
 use Filament\Forms;
 use Filament\Notifications\Notification;
 use Illuminate\Support\Collection;
@@ -28,7 +29,7 @@ class PostBulkActions
             Actions\BulkAction::make('category')
                 ->label(trans('filament-cms::messages.content.posts.sections.status.columns.categories'))
                 ->icon('heroicon-o-rectangle-stack')
-                ->form([
+                ->schema([
                     Forms\Components\Select::make('categories')
                         ->label(trans('filament-cms::messages.content.posts.sections.status.columns.categories'))
                         ->searchable()
@@ -81,11 +82,11 @@ class PostBulkActions
         return array_merge(self::getDefaultActions(), self::$actions);
     }
 
-    public static function register(\Filament\Actions\Action | array $action): void
+    public static function register(Action | array $action): void
     {
         if (is_array($action)) {
             foreach ($action as $item) {
-                if ($item instanceof \Filament\Actions\Action) {
+                if ($item instanceof Action) {
                     self::$actions[] = $item;
                 }
             }

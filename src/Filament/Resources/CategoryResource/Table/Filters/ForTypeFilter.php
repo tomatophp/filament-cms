@@ -13,7 +13,7 @@ class ForTypeFilter
     public static function make(): Filter
     {
         return Filter::make('for')
-            ->form([
+            ->schema([
                 Forms\Components\Select::make('for')
                     ->label(trans('filament-cms::messages.content.category.sections.status.columns.for'))
                     ->searchable()

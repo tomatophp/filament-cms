@@ -15,6 +15,7 @@ use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use LaraZeus\SpatieTranslatable\SpatieTranslatablePlugin;
 use TomatoPHP\FilamentCms\FilamentCMSPlugin;
 
 class AdminPanelProvider extends PanelProvider
@@ -30,7 +31,7 @@ class AdminPanelProvider extends PanelProvider
                 Pages\Dashboard::class,
             ])
             ->plugin(
-                \LaraZeus\SpatieTranslatable\SpatieTranslatablePlugin::make()
+                SpatieTranslatablePlugin::make()
                     ->defaultLocales(['en'])
             )
             ->plugin(

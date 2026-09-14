@@ -2,14 +2,15 @@
 
 namespace TomatoPHP\FilamentCms\Models;
 
-use App\Models\Team;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\Translatable\HasTranslations;
-use TomatoPHP\FilamentEcommerce\Models\Product;
+use TomatoPHP\FilamentCms\Database\Factories\CategoryFactory;
 
 /**
  * @property int $id
@@ -39,7 +40,7 @@ class Category extends Model implements HasMedia
 
     protected static function newFactory()
     {
-        return \TomatoPHP\FilamentCms\Tests\Database\Factories\CategoryFactory::new();
+        return CategoryFactory::new();
     }
 
     public $translatable = [
@@ -72,7 +73,7 @@ class Category extends Model implements HasMedia
 
     public function team()
     {
-        return $this->belongsTo(Team::class);
+        return $this->belongsTo('App\Models\Team');
     }
 
     public function children()
@@ -81,7 +82,7 @@ class Category extends Model implements HasMedia
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
     public function parent()
     {
@@ -89,7 +90,7 @@ class Category extends Model implements HasMedia
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany
      */
     public function categoriesMetas()
     {
@@ -103,6 +104,6 @@ class Category extends Model implements HasMedia
 
     public function products()
     {
-        return $this->hasMany(Product::class);
+        return $this->hasMany('TomatoPHP\FilamentEcommerce\Models\Product');
     }
 }

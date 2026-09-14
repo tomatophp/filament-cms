@@ -11,18 +11,18 @@ use TomatoPHP\FilamentCms\Services\FilamentCMSAuthors;
 use TomatoPHP\FilamentCms\Services\FilamentCMSTypes;
 
 /**
- * @method FilamentCMSAuthors authors()
- * @method FilamentCMSTypes types()
- * @method void registerPostAction(array | Action | ActionGroup $action, string $page = ListPosts::class)
- * @method void registerCategoryAction(array | Action $action, string $page = ListCategories::class)
- * @method array getPostActions(string $page = ListPosts::class)
- * @method array getCategoryActions(string $page = ListCategories::class)
- * @method void registerPostRelation(string $relation)
- * @method void registerCategoryRelation(string $relation)
- * @method array getPostRelations()
- * @method array getCategoryRelations()
- * @method void registerImportAction(array | Action | ActionGroup $action)
- * @method array getImportActions()
+ * @method static FilamentCMSAuthors authors()
+ * @method static FilamentCMSTypes types()
+ * @method static void registerPostAction(array | Action | ActionGroup $action, string $page = ListPosts::class)
+ * @method static void registerCategoryAction(array | Action $action, string $page = ListCategories::class)
+ * @method static array getPostActions(string $page = ListPosts::class)
+ * @method static array getCategoryActions(string $page = ListCategories::class)
+ * @method static void registerPostRelation(string $relation)
+ * @method static void registerCategoryRelation(string $relation)
+ * @method static array getPostRelations()
+ * @method static array getCategoryRelations()
+ * @method static void registerImportAction(array | Action | ActionGroup $action)
+ * @method static array getImportActions()
  */
 class FilamentCMS extends Facade
 {

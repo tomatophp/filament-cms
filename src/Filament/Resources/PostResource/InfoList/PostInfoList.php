@@ -2,6 +2,7 @@
 
 namespace TomatoPHP\FilamentCms\Filament\Resources\PostResource\InfoList;
 
+use Filament\Schemas\Components\Component;
 use Filament\Schemas\Schema;
 
 class PostInfoList
@@ -26,11 +27,11 @@ class PostInfoList
         return array_merge(self::getDefaultSchema(), self::$schema);
     }
 
-    public static function register(\Filament\Schemas\Components\Component | array $component): void
+    public static function register(Component | array $component): void
     {
         if (is_array($component)) {
             foreach ($component as $item) {
-                if ($item instanceof \Filament\Schemas\Components\Component) {
+                if ($item instanceof Component) {
                     self::$schema[] = $item;
                 }
             }

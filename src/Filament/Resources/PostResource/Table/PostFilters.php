@@ -3,6 +3,7 @@
 namespace TomatoPHP\FilamentCms\Filament\Resources\PostResource\Table;
 
 use Filament\Tables\Filters\Filter;
+use Filament\Tables\Filters\TrashedFilter;
 
 class PostFilters
 {
@@ -21,7 +22,7 @@ class PostFilters
             Filters\PublishedAtFilter::make(),
             Filters\IsPublishedFilter::make(),
             Filters\IsTrendFilter::make(),
-            \Filament\Tables\Filters\TrashedFilter::make(),
+            TrashedFilter::make(),
         ];
     }
 

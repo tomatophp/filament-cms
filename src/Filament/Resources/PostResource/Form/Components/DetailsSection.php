@@ -3,6 +3,7 @@
 namespace TomatoPHP\FilamentCms\Filament\Resources\PostResource\Form\Components;
 
 use Filament\Forms;
+use Filament\Schemas\Components\Grid;
 use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Components\Utilities\Set;
 use Illuminate\Support\Str;
@@ -12,7 +13,7 @@ class DetailsSection extends Component
 {
     public static function make(): \Filament\Schemas\Components\Component
     {
-        return \Filament\Schemas\Components\Grid::make([
+        return Grid::make([
             'sm' => 1,
             'md' => 2,
             'lg' => 2,

@@ -3,6 +3,7 @@
 namespace TomatoPHP\FilamentCms\Filament\Resources\CategoryResource\Table;
 
 use Filament\Tables\Filters\Filter;
+use Filament\Tables\Filters\TrashedFilter;
 
 class CategoryFilters
 {
@@ -17,7 +18,7 @@ class CategoryFilters
     {
         return [
             Filters\ForTypeFilter::make(),
-            \Filament\Tables\Filters\TrashedFilter::make(),
+            TrashedFilter::make(),
         ];
     }
 

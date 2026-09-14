@@ -11,7 +11,7 @@ class IsTrendFilter
     public static function make(): Filter
     {
         return Filter::make('is_trend')
-            ->form([
+            ->schema([
                 Forms\Components\Toggle::make('is_trend')
                     ->label('Trend'),
             ])

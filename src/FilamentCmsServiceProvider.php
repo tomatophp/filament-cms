@@ -3,6 +3,7 @@
 namespace TomatoPHP\FilamentCms;
 
 use Illuminate\Support\ServiceProvider;
+use TomatoPHP\FilamentCms\Console\FilamentCmsInstall;
 use TomatoPHP\FilamentCms\Services\Contracts\CmsType;
 use TomatoPHP\FilamentCms\Services\FilamentCMSServices;
 use TomatoPHP\FilamentCms\Services\FilamentCMSTypes;
@@ -13,7 +14,7 @@ class FilamentCmsServiceProvider extends ServiceProvider
     {
         // Register generate command
         $this->commands([
-            \TomatoPHP\FilamentCms\Console\FilamentCmsInstall::class,
+            FilamentCmsInstall::class,
         ]);
 
         // Register Config file
