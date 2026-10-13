@@ -2,6 +2,7 @@
     "name": "tomatophp/filament-cms",
     "type": "library",
     "description": "Full CMS System with support of importing integrations and multi meta functions",
+    "homepage": "https://tomatophp.com/en/plugins/filament-cms",
     "keywords": [
         "php",
         "laravel",
