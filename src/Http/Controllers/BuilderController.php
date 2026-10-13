@@ -2,9 +2,10 @@
 
 namespace TomatoPHP\FilamentCms\Http\Controllers;
 
-use App\Http\Controllers\Controller;
+use Illuminate\Routing\Controller;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
 use ProtoneMedia\Splade\Facades\Toast;
@@ -13,31 +14,17 @@ use TomatoPHP\TomatoThemes\Facades\TomatoThemes;
 
 class BuilderController extends Controller
 {
-    public function edit(Request $request, Post $model)
-    {
-        return view('filament-cms::themes.builder-page', compact('model'));
-    }
-
-    public function update(Request $request, Post $model)
-    {
-        $request->validate([
-            "body" => "required|string"
-        ]);
-
-        $model->body = $request->get('body');
-        $model->save();
-
-        Toast::success(__('Page updated successfully'))->autoDismiss(2);
-        return redirect()->back();
-    }
-
     public function builder(Request $request, \TomatoPHP\FilamentCms\Models\Post $model): View|JsonResponse
     {
+        $this->authorizePage($request, $model);
+
         $sections = \TomatoPHP\FilamentCms\Facades\FilamentCms::themes()->getSections()->groupBy('group');
         return view('filament-themes::pages.builder', compact('model', 'sections'));
     }
 
     public function meta(Request $request,\TomatoPHP\FilamentCms\Models\Post $model){
+        $this->authorizePage($request, $model);
+
         $request->validate([
             "section" => "required|string"
         ]);
@@ -61,6 +48,8 @@ class BuilderController extends Controller
     }
 
     public function metaStore(Request $request, \TomatoPHP\FilamentCms\Models\Post $model){
+        $this->authorizePage($request, $model);
+
         $request->validate([
             "section" => "required|string"
         ]);
@@ -98,6 +87,8 @@ class BuilderController extends Controller
     }
 
     public function remove(Request $request, \TomatoPHP\FilamentCms\Models\Post $model){
+        $this->authorizePage($request, $model);
+
         $request->validate([
             "section" => "required|string"
         ]);
@@ -114,6 +105,8 @@ class BuilderController extends Controller
     }
 
     public function sections(Request $request, \TomatoPHP\FilamentCms\Models\Post $model){
+        $this->authorizePage($request, $model);
+
         $request->validate([
             "section" => "required|string"
         ]);
@@ -138,10 +131,25 @@ class BuilderController extends Controller
 
     }
 
-    public function clear(\TomatoPHP\FilamentCms\Models\Post $model){
+    public function clear(Request $request, \TomatoPHP\FilamentCms\Models\Post $model){
+        $this->authorizePage($request, $model);
+
         $model->meta('sections', []);
 
         Toast::success(__('Sections cleared successfully'))->autoDismiss(2);
         return redirect()->back();
+    }
+
+    /**
+     * Only users the host app's Post policy allows to `update` the page may use the builder.
+     * Without a registered policy every request is denied.
+     */
+    protected function authorizePage(Request $request, Post $model): void
+    {
+        $user = $request->user();
+        abort_unless($user, 403);
+        abort_if(Gate::getPolicyFor($model) === null, 403);
+
+        Gate::forUser($user)->authorize('update', $model);
     }
 }

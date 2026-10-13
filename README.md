@@ -276,6 +276,30 @@ now if you open your page you will find the builder view like this
 ![Page Builder](https://raw.githubusercontent.com/tomatophp/filament-cms/master/arts/page-builder.png)
 ![Page Builder Prview](https://raw.githubusercontent.com/tomatophp/filament-cms/master/arts/page-builder-preview.png)
 
+### Page Builder Permissions
+
+> **Breaking change in v1.0.32:** the page builder now asks your app who may edit a page.
+
+The builder toolbar, and saving sections from it, only work for a signed-in user who passes the `update` ability on the page. Register a policy for `TomatoPHP\FilamentCms\Models\Post` with an `update` method, for example on your `AuthServiceProvider`:
+
+```php
+use Illuminate\Support\Facades\Gate;
+use TomatoPHP\FilamentCms\Models\Post;
+
+Gate::policy(Post::class, \App\Policies\PostPolicy::class);
+```
+
+```php
+public function update($user, Post $post): bool
+{
+    return $user->can('update_post'); // your own rule
+}
+```
+
+If no policy is registered for `Post`, nobody can edit pages from the toolbar. If you use Filament Shield (see below), its generated `PostPolicy` already covers this.
+
+The old Splade builder routes (`admin/pages/{model}/builder`, `.../sections`, `.../meta`, `.../clear` ...) are now **off by default**. If you still use them, turn them on with `FILAMENT_CMS_BUILDER_ROUTES=true` or the `builder_routes` key on `config/filament-cms.php`. They need the same `update` permission on the page.
+
 ## Add Form Field Type
 
 you can add more fields to the form builder by use this method on your provider.

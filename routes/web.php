@@ -5,7 +5,11 @@ use Illuminate\Support\Facades\Route;
 use TomatoPHP\FilamentCms\Http\Controllers\BuilderController;
 use ProtoneMedia\Splade\Http\SpladeMiddleware;
 
-Route::middleware(['web', 'auth', SpladeMiddleware::class])
+if (! config('filament-cms.builder_routes.enabled', false)) {
+    return;
+}
+
+Route::middleware(config('filament-cms.builder_routes.middleware', ['web', 'auth', SpladeMiddleware::class]))
     ->name('admin.')
     ->controller(BuilderController::class)->group(function () {
         Route::get('admin/pages/{model}/builder', 'builder')->name('pages.builder');
