@@ -11,6 +11,7 @@ use Filament\Forms\Contracts\HasForms;
 use Filament\Forms\Form;
 use Filament\Forms;
 use Filament\Notifications\Notification;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
 use Livewire\Attributes\On;
@@ -44,12 +45,30 @@ class BuilderToolbar extends Component  implements HasForms, HasActions
         }
     }
 
+    /**
+     * Only users the host app's Post policy allows to `update` the page may edit it.
+     * Without a registered policy nobody can.
+     */
+    public function canEdit(): bool
+    {
+        $user = auth()->user();
+
+        if (! $user || ! $this->page || Gate::getPolicyFor($this->page) === null) {
+            return false;
+        }
+
+        return Gate::forUser($user)->allows('update', $this->page);
+    }
+
     public function editPageAction()
     {
         $page = $this->page;
         return Action::make('editPage')
             ->label('Edit Page')
+            ->visible(fn () => $this->canEdit())
             ->action(function (array $data) use ($page){
+                abort_unless($this->canEdit(), 403);
+
                 return redirect()->to(EditPost::getUrl([$page->id]));
             });
     }
@@ -88,6 +107,8 @@ class BuilderToolbar extends Component  implements HasForms, HasActions
 
     public function saveSections(): void
     {
+        abort_unless($this->canEdit(), 403);
+
         $sections = collect($this->form->getState()['sections'])->map(function ($item, $key){
             $item['uuid'] = Str::uuid()->toString();
             $item['order'] = $key;

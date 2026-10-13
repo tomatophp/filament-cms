@@ -1,5 +1,5 @@
 <div>
-    @if(auth()->user())
+    @if($this->canEdit())
     <div class="py-6 px-6 border-b dark:border-gray-700 flex justify-between">
         <div class="flex justify-start gap-4">
             {{ $this->editPageAction }}
