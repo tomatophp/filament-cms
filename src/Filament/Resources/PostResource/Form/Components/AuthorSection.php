@@ -2,7 +2,6 @@
 
 namespace TomatoPHP\FilamentCms\Filament\Resources\PostResource\Form\Components;
 
-use App\Models\User;
 use Filament\Forms;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Components\Utilities\Get;
@@ -19,7 +18,7 @@ class AuthorSection extends Component
             ->schema([
                 Forms\Components\Select::make('author_type')
                     ->label(trans('filament-cms::messages.content.posts.sections.author.columns.author_type'))
-                    ->options(count(FilamentCMSAuthors::getOptions()) ? FilamentCMSAuthors::getOptions()->pluck('name', 'model')->toArray() : [User::class => 'Users'])
+                    ->options(count(FilamentCMSAuthors::getOptions()) ? FilamentCMSAuthors::getOptions()->pluck('name', 'model')->toArray() : [config('auth.providers.users.model', 'App\Models\User') => 'Users'])
                     ->afterStateUpdated(fn (Get $get, Set $set) => $set('author_id', null))
                     ->preload()
                     ->live()

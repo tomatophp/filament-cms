@@ -1,6 +1,6 @@
 <?php
 
-namespace TomatoPHP\FilamentCms\Tests\Database\Factories;
+namespace TomatoPHP\FilamentCms\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use TomatoPHP\FilamentCms\Models\Category;

@@ -11,7 +11,7 @@ class IsPublishedFilter
     public static function make(): Filter
     {
         return Filter::make('is_published')
-            ->form([
+            ->schema([
                 Forms\Components\Toggle::make('is_published')
                     ->label('Published'),
             ])

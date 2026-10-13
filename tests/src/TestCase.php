@@ -20,10 +20,14 @@ use Orchestra\Testbench\Attributes\WithEnv;
 use Orchestra\Testbench\Concerns\WithWorkbench;
 use Orchestra\Testbench\TestCase as BaseTestCase;
 use RyanChandler\BladeCaptureDirective\BladeCaptureDirectiveServiceProvider;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
+use Spatie\MediaLibrary\MediaLibraryServiceProvider;
 use TomatoPHP\FilamentCms\FilamentCmsServiceProvider;
 use TomatoPHP\FilamentCms\Services\Contracts\CmsType;
 use TomatoPHP\FilamentCms\Services\FilamentCMSTypes;
 use TomatoPHP\FilamentCms\Tests\Models\User;
+use TomatoPHP\FilamentIcons\FilamentIconsServiceProvider;
+use TomatoPHP\FilamentTranslationComponent\FilamentTranslationComponentServiceProvider;
 
 #[WithEnv('DB_CONNECTION', 'testing')]
 abstract class TestCase extends BaseTestCase
@@ -108,9 +112,9 @@ abstract class TestCase extends BaseTestCase
             TablesServiceProvider::class,
             WidgetsServiceProvider::class,
             SchemasServiceProvider::class,
-            \TomatoPHP\FilamentIcons\FilamentIconsServiceProvider::class,
-            \TomatoPHP\FilamentTranslationComponent\FilamentTranslationComponentServiceProvider::class,
-            \Spatie\MediaLibrary\MediaLibraryServiceProvider::class,
+            FilamentIconsServiceProvider::class,
+            FilamentTranslationComponentServiceProvider::class,
+            MediaLibraryServiceProvider::class,
             FilamentCmsServiceProvider::class,
             AdminPanelProvider::class,
         ];
@@ -142,7 +146,7 @@ abstract class TestCase extends BaseTestCase
             ]);
 
             // Configure media-library
-            $config->set('media-library.media_model', \Spatie\MediaLibrary\MediaCollections\Models\Media::class);
+            $config->set('media-library.media_model', Media::class);
             $config->set('media-library.disk_name', 'public');
         });
     }

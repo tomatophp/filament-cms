@@ -5,6 +5,7 @@ namespace TomatoPHP\FilamentCms\Infolists\Components;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Support\Contracts\HasLabel as LabelInterface;
 use Illuminate\Contracts\Support\Htmlable;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\HtmlString;
 use Illuminate\Support\Str;
 
@@ -38,12 +39,13 @@ class MarkdownEntry extends TextEntry
         return $this;
     }
 
-    public function formatState(mixed $state): mixed
+    public function formatState(mixed $state, ?Model $relatedRecord = null): mixed
     {
-        $isHtml = $this->isHtml();
+        $isHtml = $this->isHtml($state, $relatedRecord);
 
         $state = $this->evaluate($this->formatStateUsing ?? $state, [
             'state' => $state,
+            'relatedRecord' => $relatedRecord,
         ]);
 
         if ($isHtml) {

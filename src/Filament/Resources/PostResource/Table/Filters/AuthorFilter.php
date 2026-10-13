@@ -2,7 +2,6 @@
 
 namespace TomatoPHP\FilamentCms\Filament\Resources\PostResource\Table\Filters;
 
-use App\Models\User;
 use Filament\Forms;
 use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Components\Utilities\Set;
@@ -16,10 +15,10 @@ class AuthorFilter
     {
         return Filter::make('author_id')
             ->label('Author')
-            ->form([
+            ->schema([
                 Forms\Components\Select::make('author_type')
                     ->label('Author Type')
-                    ->options(count(FilamentCMSAuthors::getOptions()) ? FilamentCMSAuthors::getOptions()->pluck('name', 'model')->toArray() : [User::class => 'Users'])
+                    ->options(count(FilamentCMSAuthors::getOptions()) ? FilamentCMSAuthors::getOptions()->pluck('name', 'model')->toArray() : [config('auth.providers.users.model', 'App\Models\User') => 'Users'])
                     ->afterStateUpdated(fn (Get $get, Set $set) => $set('author_id', null))
                     ->live()
                     ->searchable(),

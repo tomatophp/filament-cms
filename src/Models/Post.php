@@ -5,10 +5,12 @@ namespace TomatoPHP\FilamentCms\Models;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\Translatable\HasTranslations;
+use TomatoPHP\FilamentCms\Database\Factories\PostFactory;
 
 /**
  * @property int $id
@@ -43,7 +45,7 @@ class Post extends Model implements HasMedia
 
     protected static function newFactory()
     {
-        return \TomatoPHP\FilamentCms\Tests\Database\Factories\PostFactory::new();
+        return PostFactory::new();
     }
 
     public $translatable = [
@@ -92,21 +94,13 @@ class Post extends Model implements HasMedia
         'updated_at',
     ];
 
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function comments()
-    {
-        return $this->morphMany(Comment::class, 'content');
-    }
-
     public function author()
     {
         return $this->morphTo('author');
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return BelongsToMany
      */
     public function categories()
     {
@@ -114,7 +108,7 @@ class Post extends Model implements HasMedia
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return BelongsToMany
      */
     public function tags()
     {

@@ -12,12 +12,6 @@ use Illuminate\Support\Str;
  * @property string $label
  * @property string $icon
  * @property string $color
- *
- * @method static make(string $key)
- * @method key(string $key)
- * @method label(string $label)
- * @method icon(string $icon)
- * @method color(string $color)
  */
 class CmsType
 {

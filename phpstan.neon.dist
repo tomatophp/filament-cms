@@ -1,0 +1,9 @@
+parameters:
+    level: 0
+    paths:
+        - src
+    type_coverage:
+        return_type: 0
+        param_type: 0
+        property_type: 0
+        constant_type: 0

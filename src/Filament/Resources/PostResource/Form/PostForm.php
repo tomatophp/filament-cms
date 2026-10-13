@@ -3,6 +3,7 @@
 namespace TomatoPHP\FilamentCms\Filament\Resources\PostResource\Form;
 
 use Filament\Forms\Components\Field;
+use Filament\Schemas\Components\Component;
 use Filament\Schemas\Components\Grid;
 use Filament\Schemas\Schema;
 
@@ -40,7 +41,7 @@ class PostForm
     {
         if (is_array($component)) {
             foreach ($component as $item) {
-                if ($item instanceof Field || $item instanceof \Filament\Schemas\Components\Component) {
+                if ($item instanceof Field || $item instanceof Component) {
                     self::$schema[] = $item;
                 }
             }

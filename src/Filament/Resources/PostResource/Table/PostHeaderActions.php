@@ -3,6 +3,7 @@
 namespace TomatoPHP\FilamentCms\Filament\Resources\PostResource\Table;
 
 use Filament\Actions;
+use Filament\Actions\Action;
 use TomatoPHP\FilamentCms\Filament\Resources\PostResource\Export;
 use TomatoPHP\FilamentCms\Filament\Resources\PostResource\Import;
 
@@ -37,11 +38,11 @@ class PostHeaderActions
         return array_merge(self::getDefaultActions(), self::$actions);
     }
 
-    public static function register(\Filament\Actions\Action | array $action): void
+    public static function register(Action | array $action): void
     {
         if (is_array($action)) {
             foreach ($action as $item) {
-                if ($item instanceof \Filament\Actions\Action) {
+                if ($item instanceof Action) {
                     self::$actions[] = $item;
                 }
             }

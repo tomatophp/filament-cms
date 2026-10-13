@@ -11,7 +11,7 @@ class PublishedAtFilter
     public static function make(): Filter
     {
         return Filter::make('published_at')
-            ->form([
+            ->schema([
                 Forms\Components\DatePicker::make('published_at')
                     ->label('Published At'),
             ])

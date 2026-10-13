@@ -1,10 +1,10 @@
 <?php
 
-namespace TomatoPHP\FilamentCms\Tests\Database\Factories;
+namespace TomatoPHP\FilamentCms\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Database\Eloquent\Model;
 use TomatoPHP\FilamentCms\Models\Post;
-use TomatoPHP\FilamentCms\Tests\Models\User;
 
 class PostFactory extends Factory
 {
@@ -13,8 +13,8 @@ class PostFactory extends Factory
     public function definition(): array
     {
         return [
-            'author_id' => User::factory(),
-            'author_type' => User::class,
+            'author_id' => null,
+            'author_type' => null,
             'type' => $this->faker->randomElement(['post', 'page', 'portfolio']),
             'title' => $this->faker->sentence(),
             'slug' => $this->faker->unique()->slug(),
@@ -30,6 +30,14 @@ class PostFactory extends Factory
             'meta_url' => null,
             'meta_redirect' => null,
         ];
+    }
+
+    public function author(Model $author): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'author_id' => $author->getKey(),
+            'author_type' => $author->getMorphClass(),
+        ]);
     }
 
     public function published(): static

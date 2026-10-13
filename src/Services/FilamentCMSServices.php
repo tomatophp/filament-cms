@@ -108,9 +108,9 @@ class FilamentCMSServices
         return $this->categoryActions[$page] ?? [];
     }
 
-    public function types(): FilamentCmsTypes
+    public function types(): FilamentCMSTypes
     {
-        return new FilamentCmsTypes;
+        return new FilamentCMSTypes;
     }
 
     public function authors(): FilamentCMSAuthors
